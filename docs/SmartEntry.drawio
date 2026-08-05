@@ -1,0 +1,72 @@
+<mxfile host="app.diagrams.net" pages="2">
+  <diagram id="j7qQjMMbXBCh2rp4OeUu" name="Visitor workflow">
+    <mxGraphModel dx="391" dy="488" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="A4yv94tWI5n50_Qbufte-7" edge="1" parent="1" source="A4yv94tWI5n50_Qbufte-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="A4yv94tWI5n50_Qbufte-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="A4yv94tWI5n50_Qbufte-1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Visitor arrives." vertex="1">
+          <mxGeometry height="40" width="80" x="240" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="A4yv94tWI5n50_Qbufte-8" edge="1" parent="1" source="A4yv94tWI5n50_Qbufte-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="A4yv94tWI5n50_Qbufte-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="A4yv94tWI5n50_Qbufte-2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Reception registration." vertex="1">
+          <mxGeometry height="40" width="80" x="360" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="A4yv94tWI5n50_Qbufte-9" edge="1" parent="1" source="A4yv94tWI5n50_Qbufte-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="A4yv94tWI5n50_Qbufte-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="A4yv94tWI5n50_Qbufte-3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Visitor pass issued." vertex="1">
+          <mxGeometry height="40" width="80" x="360" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="A4yv94tWI5n50_Qbufte-10" edge="1" parent="1" source="A4yv94tWI5n50_Qbufte-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="A4yv94tWI5n50_Qbufte-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="A4yv94tWI5n50_Qbufte-4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Visit." vertex="1">
+          <mxGeometry height="40" width="80" x="360" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="A4yv94tWI5n50_Qbufte-11" edge="1" parent="1" source="A4yv94tWI5n50_Qbufte-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="A4yv94tWI5n50_Qbufte-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="A4yv94tWI5n50_Qbufte-5" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Visitor exit." vertex="1">
+          <mxGeometry height="40" width="80" x="240" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="A4yv94tWI5n50_Qbufte-6" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Pass returned." vertex="1">
+          <mxGeometry height="40" width="80" x="240" y="320" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="P_lxlp5xrHvM4Vzi9utT" name="Security workflow">
+    <mxGraphModel dx="774" dy="464" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="v2oeaK2vRBiBPjCiR2Lt-5" edge="1" parent="1" source="v2oeaK2vRBiBPjCiR2Lt-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="v2oeaK2vRBiBPjCiR2Lt-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="v2oeaK2vRBiBPjCiR2Lt-1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Local organization." vertex="1">
+          <mxGeometry height="40" width="80" x="120" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="v2oeaK2vRBiBPjCiR2Lt-6" edge="1" parent="1" source="v2oeaK2vRBiBPjCiR2Lt-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="v2oeaK2vRBiBPjCiR2Lt-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="v2oeaK2vRBiBPjCiR2Lt-2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Encrypt information." vertex="1">
+          <mxGeometry height="40" width="80" x="120" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="v2oeaK2vRBiBPjCiR2Lt-7" edge="1" parent="1" source="v2oeaK2vRBiBPjCiR2Lt-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="v2oeaK2vRBiBPjCiR2Lt-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="v2oeaK2vRBiBPjCiR2Lt-3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Shared intelligence network." vertex="1">
+          <mxGeometry height="40" width="80" x="120" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="v2oeaK2vRBiBPjCiR2Lt-4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Receiving organization." vertex="1">
+          <mxGeometry height="40" width="80" x="120" y="280" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
