@@ -26,6 +26,8 @@ export function loadLayout(title, content) {
                 </main>
             </div>
         </div>
+
+        <div id="modal-container"></div>
     `;
 
     document.getElementById("navbar").innerHTML = navbar();
