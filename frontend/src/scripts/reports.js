@@ -1,9 +1,19 @@
 import { loadLayout } from "../components/layout.js";
+const reportsContent = `
 
-const reportContent = `
+<div class="card shadow-sm">
+    <div class="card-header bg-white">
+        <h5 class="mb-0">
+            Reports
+        </h5>
+    </div>
 
-Reports
-
+    <div class="card-body">
+        <p class="text-muted">
+            Reports will appear here.
+        </p>
+    </div>
+</div>
 `;
 
-loadLayout("Reports", reportContent);
+loadLayout("Reports", reportsContent);
