@@ -1,46 +1,31 @@
 export function sidebar() {
+    return `
 
-return `
+<div class="sidebar">
+    <a href="/src/pages/dashboard.html" class="menu-item active">
+        <i class="bi bi-grid me-2"></i>
+        Dashboard
+    </a>
 
-<div class="list-group rounded-0 vh-100">
+    <a href="/src/pages/visitors.html" class="menu-item">
+        <i class="bi bi-people me-2"></i>
+        Visitors
+    </a>
 
-<a href="/pages/dashboard.html"
-class="list-group-item">
+    <a href="/src/pages/incident.html" class="menu-item">
+        <i class="bi bi-exclamation-triangle me-2"></i>
+        Incidents
+    </a>
 
-Dashboard
+    <a href="/src/pages/reports.html" class="menu-item">
+        <i class="bi bi-file-earmark-text me-2"></i>
+        Reports
+    </a>
 
-</a>
-
-<a href="/pages/visitors.html"
-class="list-group-item">
-
-Visitors
-
-</a>
-
-<a href="/pages/incident.html"
-class="list-group-item">
-
-Incidents
-
-</a>
-
-<a href="/pages/reports.html"
-class="list-group-item">
-
-Reports
-
-</a>
-
-<a href="/pages/settings.html"
-class="list-group-item">
-
-Settings
-
-</a>
-
+    <a href="/src/pages/settings.html" class="menu-item">
+        <i class="bi bi-gear me-2"></i>
+        Settings
+    </a>
 </div>
-
 `;
-
 }
