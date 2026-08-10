@@ -1,7 +1,7 @@
 import { loadLayout } from "../components/layout.js";
 import { statCards } from "../components/statCards.js";
 import { visitorsTable } from "../components/visitorsTable.js";
-import { incidentsTable } from "../components/incidentsTable.js";
+import { incidentTable } from "../components/incidentTable.js";
 
 const dashboardContent = `
     ${statCards()}
@@ -13,7 +13,7 @@ const dashboardContent = `
         </div>
 
         <div class="col-lg-5 mb-4">
-            ${incidentsTable()}
+            ${incidentTable()}
         </div>
 
     </div>
