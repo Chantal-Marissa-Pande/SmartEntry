@@ -27,6 +27,7 @@ export function loadLayout(title, content) {
             </div>
         </div>
 
+        <!--Modal container for dynamic modals-->
         <div id="modal-container"></div>
     `;
 

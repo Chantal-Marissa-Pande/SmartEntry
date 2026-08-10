@@ -4,32 +4,62 @@ export function visitorTable(visitors = []) {
     const rows = visitors.map(visitor => `
 
         <tr>
-            <td>${visitor.name}</td>
-            <td>${visitor.company}</td>
-            <td>${visitor.phone}</td>
-            <td>${visitor.nationalId}</td>
-            <td>${visitor.host}</td>
-            <td>${visitor.purpose}</td>
-            <td>${visitor.visitorType}</td>
-            <td>${visitor.expectedTime}</td>
-            <td>${statusBadge(visitor.status)}</td>
+            <td>
+                <strong>${visitor.name}</strong>
+            </td>
 
             <td>
+                ${visitor.company || "-"}
+            </td>
+            
+            <td>
+                ${visitor.phone || "-"}
+            </td>
+
+            <td>
+                ${visitor.nationalId || "-"}
+            </td>
+
+            <td>
+                ${visitor.host || "-"}
+            </td>
+
+            <td>
+                ${visitor.purpose || "-"}
+            </td>
+
+            <td>
+                ${visitor.visitorType || "-"}
+            </td>
+
+            <td>
+                ${visitor.expectedTime || "-"}
+            </td>
+
+            <td>
+                ${statusBadge(visitor.status)}
+            </td>
+
+            <td class="text-nowrap">
                 <button
-                class="btn btn-sm btn-outline-primary view-btn"
-                data-id="${visitor.id}">
-                    View
+                    class="btn btn-sm btn-outline-primary view-btn"
+                    data-id="${visitor.id}"
+                    title="View Visitor">
+                    <i class="bi bi-eye"></i>
                 </button>
 
                 <button
-                class="btn btn-sm btn-outline-warning edit-btn"
-                data-id="${visitor.id}">
-                    Edit
+                    class="btn btn-sm btn-outline-warning edit-btn"
+                    data-id="${visitor.id}"
+                    title="Edit Visitor">
+                    <i class="bi bi-pencil"></i>
                 </button>
 
-                <button class="btn btn-sm btn-outline-danger delete-btn"
-                data-id="${visitor.id}">
-                    Delete
+                <button
+                    class="btn btn-sm btn-outline-danger delete-btn"
+                    data-id="${visitor.id}"
+                    title="Delete Visitor">
+                    <i class="bi bi-trash"></i>
                 </button>
             </td>
         </tr>
@@ -39,7 +69,7 @@ export function visitorTable(visitors = []) {
         <div class="card shadow-sm">
             <div class="card-header bg-white">
                 <h5 class="mb-0">
-                    Visitors
+                    Visitors Records
                 </h5>
             </div>
 
@@ -61,7 +91,16 @@ export function visitorTable(visitors = []) {
                     </thead>
 
                     <tbody>
-                        ${rows}
+                        ${
+                            rows|| `
+                            <tr>
+                                <td
+                                    colspan="10"
+                                    class="text-center text-muted py-4">
+                                    No visitors found.
+                                </td>
+                            </tr>
+                        `}
                     </tbody>
                 </table>
             </div>

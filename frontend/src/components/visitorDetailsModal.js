@@ -1,33 +1,129 @@
 export function visitorDetailsModal(visitor) {
     return `
+        <div
+            class="modal fade"
+            id="detailsModal"
+            tabindex="-1"
+            aria-hidden="true"
+        >
 
-<div class="modal fade" id="detailsModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">
-                    Visitor Details
-                </h5>
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
 
-                <button
-                    class="btn-close"
-                    data-bs-dismiss="modal">
-                </button>
-            </div>
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            <i class="bi bi-person-vcard me-2"></i>
+                            Visitor Details
+                        </h5>
 
-            <div class="modal-body">
-                <p><strong>Name:</strong> ${visitor.name}</p>
-                <p><strong>Company:</strong> ${visitor.company}</p>
-                <p><strong>Phone:</strong> ${visitor.phone}</p>
-                <p><strong>National ID:</strong> ${visitor.nationalId}</p>
-                <p><strong>Host:</strong> ${visitor.host}</p>
-                <p><strong>Purpose:</strong> ${visitor.purpose}</p>
-                <p><strong>Visitor Type:</strong> ${visitor.visitorType}</p>
-                <p><strong>Expected Time:</strong> ${visitor.expectedTime}</p>
-                <p><strong>Status:</strong> ${visitor.status}</p>
+                        <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="row g-3">
+
+                            <div class="col-md-6">
+                                <label class="text-muted small">
+                                    Full Name
+                                </label>
+                                <p class="fw-semibold">
+                                    ${visitor.name}
+                                </p>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="text-muted small">
+                                    Company
+                                </label>
+                                <p class="fw-semibold">
+                                    ${visitor.company || "-"}
+                                </p>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="text-muted small">
+                                    Phone Number
+                                </label>
+                                <p class="fw-semibold">
+                                    ${visitor.phone || "-"}
+                                </p>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="text-muted small">
+                                    National ID / Passport
+                                </label>
+                                <p class="fw-semibold">
+                                    ${visitor.nationalId || "-"}
+                                </p>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="text-muted small">
+                                    Host
+                                </label>
+                                <p class="fw-semibold">
+                                    ${visitor.host || "-"}
+                                </p>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="text-muted small">
+                                    Purpose
+                                </label>
+                                <p class="fw-semibold">
+                                    ${visitor.purpose || "-"}
+                                </p>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="text-muted small">
+                                    Visitor Type
+                                </label>
+                                <p class="fw-semibold">
+                                    ${visitor.visitorType || "-"}
+                                </p>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="text-muted small">
+                                    Expected Time
+                                </label>
+                                <p class="fw-semibold">
+                                    ${visitor.expectedTime || "-"}
+                                </p>
+                            </div>
+
+                            <div class="col-12">
+                                <label class="text-muted small">
+                                    Status
+                                </label>
+                                <div>
+                                    <span class="badge bg-success">
+                                        ${visitor.status}
+                                    </span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button
+                            type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal">
+                            Close
+                        </button>
+                    </div>
+
+                </div>
             </div>
         </div>
-    </div>
-</div>
-`;
+    `;
 }
