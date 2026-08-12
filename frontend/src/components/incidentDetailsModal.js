@@ -1,145 +1,219 @@
 export function incidentDetailsModal(incident) {
-    let statusClass = "bg-secondary";
 
-    if (incident.status === "Open") {
-        statusClass = "bg-danger";
-    }
+    const getStatusClass = (status) => {
 
-    if (incident.status === "Investigating") {
-        statusClass = "bg-warning text-dark";
-    }
+        switch (status) {
 
-    if (incident.status === "Resolved") {
-        statusClass = "bg-success";
-    }
+            case "Open":
+                return "bg-danger";
 
-    let priorityClass = "bg-secondary";
+            case "Investigating":
+                return "bg-warning text-dark";
 
-    if (incident.priority === "High") {
-        priorityClass = "bg-danger";
-    }
+            case "Resolved":
+                return "bg-success";
 
-    if (incident.priority === "Medium") {
-        priorityClass = "bg-warning text-dark";
-    }
+            default:
+                return "bg-secondary";
+        }
+    };
 
-    if (incident.priority === "Low") {
-        priorityClass = "bg-info text-dark";
-    }
+
+    const getPriorityClass = (priority) => {
+
+        switch (priority) {
+
+            case "High":
+                return "bg-danger";
+
+            case "Medium":
+                return "bg-warning text-dark";
+
+            case "Low":
+                return "bg-info text-dark";
+
+            default:
+                return "bg-secondary";
+        }
+    };
+
 
     return `
         <div
             class="modal fade"
             id="incidentDetailsModal"
             tabindex="-1"
+            aria-labelledby="incidentDetailsModalLabel"
             aria-hidden="true">
 
             <div class="modal-dialog modal-lg">
+
                 <div class="modal-content">
+
+                    <!-- HEADER -->
                     <div class="modal-header">
 
-                        <h5 class="modal-title">
+                        <h5
+                            class="modal-title"
+                            id="incidentDetailsModalLabel">
+
                             <i class="bi bi-exclamation-triangle me-2"></i>
+
                             Incident Details
+
                         </h5>
 
                         <button
                             type="button"
                             class="btn-close"
-                            data-bs-dismiss="modal">
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
                         </button>
+
                     </div>
 
 
+                    <!-- BODY -->
                     <div class="modal-body">
+
                         <div class="row g-4">
 
+                            <!-- INCIDENT TYPE -->
                             <div class="col-md-6">
+
                                 <div class="text-muted small">
                                     Incident Type
                                 </div>
+
                                 <div class="fw-semibold">
-                                    ${incident.type}
+                                    ${incident.type || "-"}
                                 </div>
+
                             </div>
 
+
+                            <!-- LOCATION -->
                             <div class="col-md-6">
+
                                 <div class="text-muted small">
                                     Location
                                 </div>
+
                                 <div class="fw-semibold">
-                                    ${incident.location}
+                                    ${incident.location || "-"}
                                 </div>
+
                             </div>
 
+
+                            <!-- DATE -->
                             <div class="col-md-6">
+
                                 <div class="text-muted small">
                                     Date
                                 </div>
+
                                 <div class="fw-semibold">
-                                    ${incident.date}
+                                    ${incident.date || "-"}
                                 </div>
+
                             </div>
 
+
+                            <!-- TIME -->
                             <div class="col-md-6">
+
                                 <div class="text-muted small">
                                     Time
                                 </div>
+
                                 <div class="fw-semibold">
-                                    ${incident.time}
+                                    ${incident.time || "-"}
                                 </div>
+
                             </div>
 
+
+                            <!-- PRIORITY -->
                             <div class="col-md-6">
-                                <div class="text-muted small">
+
+                                <div class="text-muted small mb-1">
                                     Priority
                                 </div>
-                                <span class="badge ${priorityClass}">
-                                    ${incident.priority}
+
+                                <span
+                                    class="badge ${getPriorityClass(
+                                        incident.priority
+                                    )}">
+
+                                    ${incident.priority || "-"}
+
                                 </span>
+
                             </div>
 
+
+                            <!-- STATUS -->
                             <div class="col-md-6">
-                                <div class="text-muted small">
+
+                                <div class="text-muted small mb-1">
                                     Status
                                 </div>
-                                <span class="badge ${statusClass}">
-                                    ${incident.status}
+
+                                <span
+                                    class="badge ${getStatusClass(
+                                        incident.status
+                                    )}">
+
+                                    ${incident.status || "-"}
+
                                 </span>
+
                             </div>
 
+
+                            <!-- REPORTED BY -->
                             <div class="col-12">
+
                                 <div class="text-muted small">
                                     Reported By
                                 </div>
 
                                 <div class="fw-semibold">
-                                    ${incident.reportedBy}
+
+                                    ${
+                                        incident.reportedBy ||
+                                        incident.reported_by ||
+                                        "-"
+                                    }
+
                                 </div>
+
                             </div>
 
-                            <div class="col-12">
-                                <div class="text-muted small mb-1">
-                                    Description
-                                </div>
-                                <div class="border rounded p-3 bg-light">
-                                    ${incident.description}
-                                </div>
-                            </div>
                         </div>
+
                     </div>
 
 
+                    <!-- FOOTER -->
                     <div class="modal-footer">
+
                         <button
                             type="button"
                             class="btn btn-secondary"
                             data-bs-dismiss="modal">
+
                             Close
+
                         </button>
+
                     </div>
+
                 </div>
+
             </div>
+
         </div>
     `;
 }

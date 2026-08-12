@@ -1,67 +1,86 @@
-let incidents = [
-    {
-        id: 1,
-        type: "Unauthorized Access",
-        description: "Attempted access through restricted entrance.",
-        location: "Main Gate",
-        reportedBy: "Security Officer",
-        date: "2026-08-10",
-        time: "08:45",
-        priority: "High",
-        status: "Open"
-    },
+import api from "./api.js";
 
-    {
-        id: 2,
-        type: "Lost Visitor Badge",
-        description: "Visitor reported a missing identification badge.",
-        location: "Reception",
-        reportedBy: "Reception Desk",
-        date: "2026-08-09",
-        time: "14:20",
-        priority: "Medium",
-        status: "Resolved"
-    },
-
-    {
-        id: 3,
-        type: "Unauthorized Vehicle",
-        description: "Vehicle attempted entry without authorization.",
-        location: "Parking Entrance",
-        reportedBy: "Security Officer",
-        date: "2026-08-08",
-        time: "17:10",
-        priority: "High",
-        status: "Investigating"
-    }
-];
-
-export function getIncidents() {
-    return incidents;
+/* =========================================
+   NORMALIZE INCIDENT
+========================================= */
+function normalizeIncident(incident) {
+    return {
+        id: incident.id,
+        type: incident.incident_type,
+        location: incident.location,
+        date: incident.date,
+        time: incident.time,
+        description: incident.description,
+        priority: incident.priority,
+        status: incident.status,
+        reportedBy: incident.reported_by_name,
+        reportedById: incident.reported_by,
+        createdAt: incident.created_at,
+        updatedAt: incident.updated_at
+    };
 }
 
-export function getIncident(id) {
-    return incidents.find(
-        incident => incident.id === id
+/* =========================================
+   GET ALL INCIDENTS
+========================================= */
+export async function getIncidents() {
+    const response = await api.get("/incidents/");
+    return response.data.map(normalizeIncident);
+}
+
+/* =========================================
+   GET SINGLE INCIDENT
+========================================= */
+export async function getIncident(id) {
+    const response =
+        await api.get(`/incidents/${id}/`);
+    return normalizeIncident(response.data);
+}
+
+/* =========================================
+   ADD INCIDENT
+========================================= */
+export async function addIncident(incident) {
+    const response = await api.post(
+        "/incidents/",
+        {
+            incident_type: incident.type,
+            location: incident.location,
+            date: incident.date,
+            time: incident.time,
+            description: incident.description,
+            priority: incident.priority,
+            status: incident.status
+        }
     );
+    return normalizeIncident(response.data);
 }
 
-export function addIncident(incident) {
-    incidents.unshift(incident);
-}
-
-export function updateIncident(updatedIncident) {
-
-    incidents = incidents.map(incident =>
-        incident.id === updatedIncident.id
-            ? updatedIncident
-            : incident
+/* =========================================
+   UPDATE INCIDENT
+========================================= */
+export async function updateIncident(id, incident) {
+    const response = await api.put(
+        `/incidents/${id}/`,
+        {
+            incident_type: incident.type,
+            location: incident.location,
+            date: incident.date,
+            time: incident.time,
+            description: incident.description,
+            priority: incident.priority,
+            status: incident.status
+        }
     );
+    return normalizeIncident(response.data);
 }
 
-export function deleteIncident(id) {
-
-    incidents = incidents.filter(
-        incident => incident.id !== id
+/* =========================================
+   DELETE INCIDENT
+========================================= */
+export async function deleteIncident(id) {
+    await api.delete(
+        `/incidents/${id}/`
     );
+    return true;
 }

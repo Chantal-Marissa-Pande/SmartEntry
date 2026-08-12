@@ -1,5 +1,17 @@
 export function incidentModal(incident = null) {
-    const isEditing = incident !== null;
+
+    const isEditing =
+        incident !== null;
+
+    const selectedType =
+        incident?.type || "";
+
+    const selectedPriority =
+        incident?.priority || "";
+
+    const selectedStatus =
+        incident?.status || "Open";
+
 
     return `
         <div
@@ -11,14 +23,22 @@ export function incidentModal(incident = null) {
 
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
+
+                    <!-- HEADER -->
                     <div class="modal-header">
+
                         <h5
                             class="modal-title"
                             id="incidentModalLabel">
+
                             <i class="bi bi-exclamation-triangle me-2"></i>
-                            ${isEditing
-                                ? "Edit Incident"
-                                : "Report Incident"}
+
+                            ${
+                                isEditing
+                                    ? "Edit Incident"
+                                    : "Report Incident"
+                            }
+
                         </h5>
 
                         <button
@@ -27,19 +47,26 @@ export function incidentModal(incident = null) {
                             data-bs-dismiss="modal"
                             aria-label="Close">
                         </button>
+
                     </div>
 
 
+                    <!-- FORM -->
                     <form id="incidentForm">
+
                         <div class="modal-body">
+
                             <div class="row g-3">
 
-                                <!-- Incident Type -->
+                                <!-- INCIDENT TYPE -->
                                 <div class="col-md-6">
+
                                     <label
                                         for="incidentType"
                                         class="form-label">
+
                                         Incident Type
+
                                     </label>
 
                                     <select
@@ -53,53 +80,83 @@ export function incidentModal(incident = null) {
 
                                         <option
                                             value="Unauthorized Access"
-                                            ${incident?.type === "Unauthorized Access"
-                                                ? "selected"
-                                                : ""}>
+                                            ${
+                                                selectedType ===
+                                                "Unauthorized Access"
+                                                    ? "selected"
+                                                    : ""
+                                            }>
+
                                             Unauthorized Access
+
                                         </option>
 
                                         <option
                                             value="Lost Visitor Badge"
-                                            ${incident?.type === "Lost Visitor Badge"
-                                                ? "selected"
-                                                : ""}>
+                                            ${
+                                                selectedType ===
+                                                "Lost Visitor Badge"
+                                                    ? "selected"
+                                                    : ""
+                                            }>
+
                                             Lost Visitor Badge
+
                                         </option>
 
                                         <option
                                             value="Unauthorized Vehicle"
-                                            ${incident?.type === "Unauthorized Vehicle"
-                                                ? "selected"
-                                                : ""}>
+                                            ${
+                                                selectedType ===
+                                                "Unauthorized Vehicle"
+                                                    ? "selected"
+                                                    : ""
+                                            }>
+
                                             Unauthorized Vehicle
+
                                         </option>
 
                                         <option
                                             value="Suspicious Activity"
-                                            ${incident?.type === "Suspicious Activity"
-                                                ? "selected"
-                                                : ""}>
+                                            ${
+                                                selectedType ===
+                                                "Suspicious Activity"
+                                                    ? "selected"
+                                                    : ""
+                                            }>
+
                                             Suspicious Activity
+
                                         </option>
 
                                         <option
                                             value="Other"
-                                            ${incident?.type === "Other"
-                                                ? "selected"
-                                                : ""}>
+                                            ${
+                                                selectedType ===
+                                                "Other"
+                                                    ? "selected"
+                                                    : ""
+                                            }>
+
                                             Other
+
                                         </option>
+
                                     </select>
+
                                 </div>
 
 
-                                <!-- Location -->
+                                <!-- LOCATION -->
                                 <div class="col-md-6">
+
                                     <label
                                         for="incidentLocation"
                                         class="form-label">
+
                                         Location
+
                                     </label>
 
                                     <input
@@ -107,16 +164,21 @@ export function incidentModal(incident = null) {
                                         id="incidentLocation"
                                         class="form-control"
                                         value="${incident?.location || ""}"
+                                        placeholder="e.g. Main Entrance"
                                         required>
+
                                 </div>
 
 
-                                <!-- Date -->
+                                <!-- DATE -->
                                 <div class="col-md-6">
+
                                     <label
                                         for="incidentDate"
                                         class="form-label">
+
                                         Date
+
                                     </label>
 
                                     <input
@@ -125,15 +187,19 @@ export function incidentModal(incident = null) {
                                         class="form-control"
                                         value="${incident?.date || ""}"
                                         required>
+
                                 </div>
 
 
-                                <!-- Time -->
+                                <!-- TIME -->
                                 <div class="col-md-6">
+
                                     <label
                                         for="incidentTime"
                                         class="form-label">
+
                                         Time
+
                                     </label>
 
                                     <input
@@ -141,16 +207,21 @@ export function incidentModal(incident = null) {
                                         id="incidentTime"
                                         class="form-control"
                                         value="${incident?.time || ""}"
+                                        step="60"
                                         required>
+
                                 </div>
 
 
-                                <!-- Priority -->
+                                <!-- PRIORITY -->
                                 <div class="col-md-6">
+
                                     <label
                                         for="incidentPriority"
                                         class="form-label">
+
                                         Priority
+
                                     </label>
 
                                     <select
@@ -164,37 +235,54 @@ export function incidentModal(incident = null) {
 
                                         <option
                                             value="High"
-                                            ${incident?.priority === "High"
-                                                ? "selected"
-                                                : ""}>
+                                            ${
+                                                selectedPriority === "High"
+                                                    ? "selected"
+                                                    : ""
+                                            }>
+
                                             High
+
                                         </option>
 
                                         <option
                                             value="Medium"
-                                            ${incident?.priority === "Medium"
-                                                ? "selected"
-                                                : ""}>
+                                            ${
+                                                selectedPriority === "Medium"
+                                                    ? "selected"
+                                                    : ""
+                                            }>
+
                                             Medium
+
                                         </option>
 
                                         <option
                                             value="Low"
-                                            ${incident?.priority === "Low"
-                                                ? "selected"
-                                                : ""}>
+                                            ${
+                                                selectedPriority === "Low"
+                                                    ? "selected"
+                                                    : ""
+                                            }>
+
                                             Low
+
                                         </option>
+
                                     </select>
+
                                 </div>
 
 
-                                <!-- Status -->
+                                <!-- STATUS -->
                                 <div class="col-md-6">
+
                                     <label
                                         for="incidentStatus"
                                         class="form-label">
+
                                         Status
+
                                     </label>
 
                                     <select
@@ -204,84 +292,82 @@ export function incidentModal(incident = null) {
 
                                         <option
                                             value="Open"
-                                            ${incident?.status === "Open"
-                                                ? "selected"
-                                                : ""}>
+                                            ${
+                                                selectedStatus === "Open"
+                                                    ? "selected"
+                                                    : ""
+                                            }>
+
                                             Open
+
                                         </option>
 
                                         <option
                                             value="Investigating"
-                                            ${incident?.status === "Investigating"
-                                                ? "selected"
-                                                : ""}>
+                                            ${
+                                                selectedStatus ===
+                                                "Investigating"
+                                                    ? "selected"
+                                                    : ""
+                                            }>
+
                                             Investigating
+
                                         </option>
 
                                         <option
                                             value="Resolved"
-                                            ${incident?.status === "Resolved"
-                                                ? "selected"
-                                                : ""}>
+                                            ${
+                                                selectedStatus === "Resolved"
+                                                    ? "selected"
+                                                    : ""
+                                            }>
+
                                             Resolved
+
                                         </option>
+
                                     </select>
+
                                 </div>
 
-
-                                <!-- Reported By -->
-                                <div class="col-12">
-                                    <label
-                                        for="reportedBy"
-                                        class="form-label">
-                                        Reported By
-                                    </label>
-
-                                    <input
-                                        type="text"
-                                        id="reportedBy"
-                                        class="form-control"
-                                        value="${incident?.reportedBy || ""}"
-                                        required>
-                                </div>
-
-
-                                <!-- Description -->
-                                <div class="col-12">
-                                    <label
-                                        for="incidentDescription"
-                                        class="form-label">
-                                        Description
-                                    </label>
-
-                                    <textarea
-                                        id="incidentDescription"
-                                        class="form-control"
-                                        rows="4"
-                                        required>${incident?.description || ""}</textarea>
-                                </div>
                             </div>
+
                         </div>
 
 
+                        <!-- FOOTER -->
                         <div class="modal-footer">
+
                             <button
                                 type="button"
                                 class="btn btn-secondary"
                                 data-bs-dismiss="modal">
+
                                 Cancel
+
                             </button>
 
                             <button
                                 type="submit"
                                 class="btn btn-primary">
-                                <i class="bi bi-check-circle me-1"></i>
-                                ${isEditing
-                                    ? "Update Incident"
-                                    : "Report Incident"}
+
+                                <i
+                                    class="bi bi-check-circle me-1">
+                                </i>
+
+                                ${
+                                    isEditing
+                                        ? "Update Incident"
+                                        : "Report Incident"
+                                }
+
                             </button>
+
                         </div>
+
                     </form>
+
                 </div>
             </div>
         </div>

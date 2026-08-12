@@ -1,101 +1,120 @@
 export function incidentTable(incidents = []) {
+    const getStatusClass = (status) => {
+        switch (status) {
+            case "Open":
+                return "bg-danger";
 
-    const rows = incidents.map(incident => {
-        let statusClass = "bg-secondary";
+            case "Investigating":
+                return "bg-warning text-dark";
 
-        if (incident.status === "Open") {
-            statusClass = "bg-danger";
+            case "Resolved":
+                return "bg-success";
+
+            default:
+                return "bg-secondary";
         }
+    };
 
-        if (incident.status === "Investigating") {
-            statusClass = "bg-warning text-dark";
+    const getPriorityClass = (priority) => {
+        switch (priority) {
+            case "High":
+                return "bg-danger";
+
+            case "Medium":
+                return "bg-warning text-dark";
+
+            case "Low":
+                return "bg-info text-dark";
+
+            default:
+                return "bg-secondary";
         }
+    };
 
-        if (incident.status === "Resolved") {
-            statusClass = "bg-success";
-        }
+    const rows = incidents.length
+        ? incidents.map((incident) => {
 
+            return `
+                <tr>
 
-        let priorityClass = "bg-secondary";
+                    <!-- TYPE -->
+                    <td>
+                        <strong>
+                            ${incident.type || "-"}
+                        </strong>
+                    </td>
 
-        if (incident.priority === "High") {
-            priorityClass = "bg-danger";
-        }
+                    <!-- LOCATION -->
+                    <td>
+                        ${incident.location || "-"}
+                    </td>
 
-        if (incident.priority === "Medium") {
-            priorityClass = "bg-warning text-dark";
-        }
+                    <!-- DATE -->
+                    <td>
+                        ${incident.date || "-"}
+                    </td>
 
-        if (incident.priority === "Low") {
-            priorityClass = "bg-info text-dark";
-        }
+                    <!-- TIME -->
+                    <td>
+                        ${incident.time || "-"}
+                    </td>
 
+                    <!-- PRIORITY -->
+                    <td>
+                        <span class="badge ${getPriorityClass(incident.priority)}">
+                            ${incident.priority || "-"}
+                        </span>
+                    </td>
 
-        return `
+                    <!-- STATUS -->
+                    <td>
+                        <span class="badge ${getStatusClass(incident.status)}">
+                            ${incident.status || "-"}
+                        </span>
+                    </td>
+
+                    <!-- ACTIONS -->
+                    <td class="text-nowrap">
+
+                        <button
+                            class="btn btn-sm btn-outline-primary view-incident-btn"
+                            data-id="${incident.id}"
+                            title="View Incident">
+                            <i class="bi bi-eye"></i>
+                        </button>
+
+                        <button
+                            class="btn btn-sm btn-outline-warning edit-incident-btn"
+                            data-id="${incident.id}"
+                            title="Edit Incident">
+                            <i class="bi bi-pencil"></i>
+                        </button>
+
+                        <button
+                            class="btn btn-sm btn-outline-danger delete-incident-btn"
+                            data-id="${incident.id}"
+                            title="Delete Incident">
+                            <i class="bi bi-trash"></i>
+                        </button>
+
+                    </td>
+                </tr>
+            `;
+        }).join("")
+        : `
             <tr>
-                <td>
-                    <strong>
-                        ${incident.type}
-                    </strong>
-
-                </td>
-
-                <td>
-                    ${incident.location}
-                </td>
-
-                <td>
-                    ${incident.date}
-                </td>
-
-                <td>
-                    ${incident.time}
-                </td>
-
-                <td>
-                    <span class="badge ${priorityClass}">
-                        ${incident.priority}
-                    </span>
-                </td>
-
-                <td>
-                    <span class="badge ${statusClass}">
-                        ${incident.status}
-                    </span>
-                </td>
-
-                <td class="text-nowrap">
-                    <button
-                        class="btn btn-sm btn-outline-primary view-incident-btn"
-                        data-id="${incident.id}"
-                        title="View Incident">
-                        <i class="bi bi-eye"></i>
-                    </button>
-
-                    <button
-                        class="btn btn-sm btn-outline-warning edit-incident-btn"
-                        data-id="${incident.id}"
-                        title="Edit Incident">
-                        <i class="bi bi-pencil"></i>
-                    </button>
-
-                    <button
-                        class="btn btn-sm btn-outline-danger delete-incident-btn"
-                        data-id="${incident.id}"
-                        title="Delete Incident">
-                        <i class="bi bi-trash"></i>
-                    </button>
+                <td
+                    colspan="7"
+                    class="text-center text-muted py-4">
+                    <i class="bi bi-shield-check fs-3 d-block mb-2"></i>
+                    No incidents found.
                 </td>
             </tr>
         `;
 
-    }).join("");
-
-
     return `
         <div class="card shadow-sm">
             <div class="card-header bg-white">
-
                 <div class="d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">
                         Incident Records
@@ -106,7 +125,6 @@ export function incidentTable(incidents = []) {
             <div class="table-responsive">
                 <table class="table table-hover align-middle mb-0">
                     <thead class="table-light">
-
                         <tr>
                             <th>Type</th>
                             <th>Location</th>
@@ -119,18 +137,7 @@ export function incidentTable(incidents = []) {
                     </thead>
 
                     <tbody>
-                        ${
-                            rows ||
-                            `
-                                <tr>
-                                    <td
-                                        colspan="7"
-                                        class="text-center text-muted py-4">
-                                        No incidents found.
-                                    </td>
-                                </tr>
-                            `
-                        }
+                        ${rows}
                     </tbody>
                 </table>
             </div>

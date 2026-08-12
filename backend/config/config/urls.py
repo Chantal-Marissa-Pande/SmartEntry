@@ -27,4 +27,10 @@ urlpatterns = [
         "api/dashboard/",
         include("core.urls"),
     ),
+
+    #Incidents
+    path(
+        "api/",
+        include("incidents.urls"),
+    ),
 ]
