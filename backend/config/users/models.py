@@ -84,3 +84,53 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name} ({self.email})"
+
+class UserSettings(models.Model):
+    user = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE,
+        related_name="settings"
+    )
+
+    # Visitor settings
+    require_id = models.BooleanField(
+        default=True
+    )
+    visitor_photo = models.BooleanField(
+        default=False
+    )
+    host_notification = models.BooleanField(
+        default=True
+    )
+
+    # Notification settings
+    incident_notifications = models.BooleanField(
+        default=True
+    )
+    visitor_notifications = models.BooleanField(
+        default=True
+    )
+    email_notifications = models.BooleanField(
+        default=False
+    )
+
+    # Security
+    session_timeout = models.PositiveIntegerField(
+        default=30
+    )
+
+    # System preferences
+    date_format = models.CharField(
+        max_length=20,
+        default="DD/MM/YYYY"
+    )
+    timezone = models.CharField(
+        max_length=50,
+        default="Africa/Nairobi"
+    )
+    updated_at = models.DateTimeField(
+        auto_now=True
+    )
+
+    def __str__(self):
+        return f"Settings - {self.user.email}"
