@@ -1,48 +1,115 @@
-let visitors = [
-    {
-        id: 1,
-        name: "John Doe",
-        company: "Eclectics",
-        phone: "0712345678",
-        nationalId: "12345678",
-        host: "Jane Mwangi",
-        purpose: "Meeting",
-        visitorType: "Guest",
-        expectedTime: "2026-08-06T09:30",
-        status: "Checked In"
-    },
-    {
-        id: 2,
-        name: "Jane Smith",
-        company: "Microsoft",
-        phone: "0798765432",
-        nationalId: "87654321",
-        host: "Peter Kimani",
-        purpose: "Delivery",
-        visitorType: "Vendor",
-        expectedTime: "2026-08-06T10:30",
-        status: "Expected"
-    }
-];
+import api from "./api.js";
 
-export function getVisitors() {
-    return visitors;
+/* =========================================
+   NORMALIZE VISITOR
+   Converts Django snake_case → frontend camelCase
+========================================= */
+function normalizeVisitor(visitor) {
+    return {
+        id: visitor.id,
+        name: visitor.name,
+        company: visitor.company,
+        phone: visitor.phone,
+        nationalId: visitor.national_id,
+        host: visitor.host,
+        purpose: visitor.purpose,
+        visitorType: visitor.visitor_type,
+        expectedTime: visitor.expected_time,
+        status: visitor.status,
+        createdAt: visitor.created_at,
+        updatedAt: visitor.updated_at
+    };
 }
 
-export function getVisitor(id) {
-    return visitors.find(visitor => visitor.id === id);
-}
-
-export function addVisitor(visitor) {
-    visitors.unshift(visitor);
-}
-
-export function updateVisitor(updatedVisitor) {
-    visitors = visitors.map(visitor =>
-        visitor.id === updatedVisitor.id ? updatedVisitor : visitor
+/* =========================================
+   GET ALL VISITORS
+========================================= */
+export async function getVisitors() {
+    const response =
+        await api.get("/visitors/");
+    return response.data.map(
+        normalizeVisitor
     );
 }
 
-export function deleteVisitor(id) {
-    visitors = visitors.filter(visitor => visitor.id !== id);
+/* =========================================
+   GET SINGLE VISITOR
+========================================= */
+export async function getVisitor(id) {
+    const response =
+        await api.get(
+            `/visitors/${id}/`
+        );
+    return normalizeVisitor(
+        response.data
+    );
+}
+
+/* =========================================
+   ADD VISITOR
+========================================= */
+export async function addVisitor(visitor) {
+    const response =
+        await api.post(
+            "/visitors/",
+            {
+                name: visitor.name,
+                company: visitor.company,
+                phone: visitor.phone,
+                national_id:
+                    visitor.nationalId,
+                host: visitor.host,
+                purpose: visitor.purpose,
+                visitor_type:
+                    visitor.visitorType,
+                expected_time:
+                    visitor.expectedTime,
+                status:
+                    visitor.status
+            }
+        );
+    return normalizeVisitor(
+        response.data
+    );
+}
+
+/* =========================================
+   UPDATE VISITOR
+========================================= */
+export async function updateVisitor(
+    id,
+    visitor
+) {
+    const response =
+        await api.put(
+            `/visitors/${id}/`,
+            {
+                name: visitor.name,
+                company: visitor.company,
+                phone: visitor.phone,
+                national_id:
+                    visitor.nationalId,
+                host: visitor.host,
+                purpose: visitor.purpose,
+                visitor_type:
+                    visitor.visitorType,
+                expected_time:
+                    visitor.expectedTime,
+                status:
+                    visitor.status
+            }
+        );
+    return normalizeVisitor(
+        response.data
+    );
+}
+
+/* =========================================
+   DELETE VISITOR
+========================================= */
+export async function deleteVisitor(id) {
+    await api.delete(
+        `/visitors/${id}/`
+    );
+    return true;
 }

@@ -1,17 +1,15 @@
 import { statusBadge } from "./statusBadge.js";
-
 export function visitorTable(visitors = []) {
     const rows = visitors.map(visitor => `
-
         <tr>
             <td>
-                <strong>${visitor.name}</strong>
+                <strong>${visitor.name || "-"}</strong>
             </td>
 
             <td>
                 ${visitor.company || "-"}
             </td>
-            
+
             <td>
                 ${visitor.phone || "-"}
             </td>
@@ -42,6 +40,7 @@ export function visitorTable(visitors = []) {
 
             <td class="text-nowrap">
                 <button
+                    type="button"
                     class="btn btn-sm btn-outline-primary view-btn"
                     data-id="${visitor.id}"
                     title="View Visitor">
@@ -49,6 +48,7 @@ export function visitorTable(visitors = []) {
                 </button>
 
                 <button
+                    type="button"
                     class="btn btn-sm btn-outline-warning edit-btn"
                     data-id="${visitor.id}"
                     title="Edit Visitor">
@@ -56,6 +56,7 @@ export function visitorTable(visitors = []) {
                 </button>
 
                 <button
+                    type="button"
                     class="btn btn-sm btn-outline-danger delete-btn"
                     data-id="${visitor.id}"
                     title="Delete Visitor">
@@ -64,6 +65,7 @@ export function visitorTable(visitors = []) {
             </td>
         </tr>
     `).join("");
+
 
     return `
         <div class="card shadow-sm">
@@ -92,15 +94,17 @@ export function visitorTable(visitors = []) {
 
                     <tbody>
                         ${
-                            rows|| `
-                            <tr>
-                                <td
-                                    colspan="10"
-                                    class="text-center text-muted py-4">
-                                    No visitors found.
-                                </td>
-                            </tr>
-                        `}
+                            rows || `
+                                <tr>
+                                    <td
+                                        colspan="10"
+                                        class="text-center text-muted py-4">
+                                        <i class="bi bi-people fs-4 d-block mb-2"></i>
+                                        No visitors found.
+                                    </td>
+                                </tr>
+                            `
+                        }
                     </tbody>
                 </table>
             </div>
