@@ -33,4 +33,10 @@ urlpatterns = [
         "api/",
         include("incidents.urls"),
     ),
+
+    #Reports
+    path(
+        "api/reports/",
+        include("reports.urls"),
+    ),
 ]

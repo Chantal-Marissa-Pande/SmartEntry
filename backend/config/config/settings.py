@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     "users",
     "visitors",
     "incidents",
+    "reports",
 ]
 
 
