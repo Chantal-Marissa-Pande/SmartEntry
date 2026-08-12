@@ -21,4 +21,10 @@ urlpatterns = [
         "api/",
         include("visitors.urls"),
     ),
+
+    #Dashboard
+    path(
+        "api/dashboard/",
+        include("core.urls"),
+    ),
 ]
