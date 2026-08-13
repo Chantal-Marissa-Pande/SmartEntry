@@ -5,9 +5,15 @@ from .views import (
     UserProfileView,
     UserSettingsView,
     ChangePasswordView,
+)
+from .admin_views import (
+    admin_dashboard,
     user_list,
 )
-from .admin_views import admin_dashboard, user_list
+
+# ========================================================
+# AUTHENTICATION
+# ========================================================
 
 urlpatterns = [
     path(
@@ -20,6 +26,10 @@ urlpatterns = [
         TokenRefreshView.as_view(),
         name="token_refresh",
     ),
+
+    # ========================================================
+    # USER PROFILE
+    # ========================================================
     path(
         "me/",
         UserProfileView.as_view(),
@@ -36,6 +46,9 @@ urlpatterns = [
         name="change-password",
     ),
 
+    # ========================================================
+    # ADMIN
+    # ========================================================
     path(
         "admin-dashboard/",
         admin_dashboard,

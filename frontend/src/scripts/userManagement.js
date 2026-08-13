@@ -4,7 +4,7 @@ import api from "../services/api.js";
 async function loadUsers() {
     try {
         const response = await api.get("/auth/users/");
-        const users = response.data || [];
+        const users = response.data?.users || [];
         const content = `
             <div class="card shadow-sm">
                 <div class="card-header d-flex justify-content-between align-items-center">

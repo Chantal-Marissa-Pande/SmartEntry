@@ -7,6 +7,9 @@ from incidents.models import Incident
 from visitors.models import Visitor
 from .serializers import UserAdminSerializer
 
+# ============================================================
+# ADMIN DASHBOARD
+# ============================================================
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def admin_dashboard(request):
@@ -100,11 +103,11 @@ def admin_dashboard(request):
     # =========================================
     # RECENT INCIDENTS
     # =========================================
-    recent_incidents_queryset = Incident.objects.select_related(
-        "reported_by"
-    ).order_by(
-        "-created_at"
-    )[:10]
+    recent_incidents_queryset = (
+        Incident.objects
+        .select_related("reported_by")
+        .order_by("-created_at")[:10]
+    )
     recent_incidents = []
     for incident in recent_incidents_queryset:
         reported_by = None
@@ -154,10 +157,43 @@ def admin_dashboard(request):
         }
     )
 
+# ============================================================
+# USER MANAGEMENT
+# ============================================================
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
 def user_list(request):
+
+    # =========================================
+    # ADMIN ACCESS CHECK
+    # =========================================
+    if request.user.role != User.Role.ADMIN:
+        return Response(
+            {
+                "detail": "You do not have permission to access user management."
+            },
+            status=403,
+        )
+
+    # =========================================
+    # GET ALL USERS
+    # =========================================
     users = User.objects.all().order_by("date_joined")
+
+    # =========================================
+    # SERIALIZE USERS
+    # =========================================
     serializer = UserAdminSerializer(
         users,
         many=True
     )
-    return Response(serializer.data)
+
+    # =========================================
+    # RESPONSE
+    # =========================================
+    return Response(
+        {
+            "users": serializer.data,
+            "count": users.count(),
+        }
+    )
