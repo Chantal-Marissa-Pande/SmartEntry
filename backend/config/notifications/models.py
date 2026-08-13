@@ -57,3 +57,39 @@ class Notification(models.Model):
 
     def __str__(self):
         return f"{self.title} - {self.user}"
+
+class IntelligenceAlert(models.Model):
+
+    ALERT_TYPES = [
+        ("trend", "Trend"),
+        ("visitor", "Visitor"),
+        ("security", "Security"),
+        ("escalation", "Escalation"),
+    ]
+
+    title = models.CharField(
+        max_length=200
+    )
+
+    description = models.TextField()
+
+    alert_type = models.CharField(
+        max_length=30,
+        choices=ALERT_TYPES
+    )
+
+    severity = models.CharField(
+        max_length=20,
+        default="Medium"
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    is_active = models.BooleanField(
+        default=True
+    )
+
+    def __str__(self):
+        return self.title

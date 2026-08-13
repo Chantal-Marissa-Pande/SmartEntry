@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Notification
+from .models import Notification, IntelligenceAlert
 
 @admin.register(Notification)
 class NotificationAdmin(admin.ModelAdmin):
@@ -20,3 +20,4 @@ class NotificationAdmin(admin.ModelAdmin):
         "title",
         "message",
     )
+admin.site.register(IntelligenceAlert)

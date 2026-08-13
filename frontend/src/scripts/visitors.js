@@ -490,6 +490,140 @@ document.addEventListener("click", async (event) => {
     }
 });
 
+/* =========================================
+   SEARCH VISITORS
+========================================= */
+document.addEventListener("input", async (event) => {
+
+    if (event.target.id !== "searchInput") {
+        return;
+    }
+
+    const searchTerm =
+        event.target.value
+            .toLowerCase()
+            .trim();
+
+    const visitors =
+        await getVisitors();
+
+    const filteredVisitors =
+        visitors.filter(visitor =>
+            (visitor.name || "")
+                .toLowerCase()
+                .includes(searchTerm)
+
+            ||
+
+            (visitor.company || "")
+                .toLowerCase()
+                .includes(searchTerm)
+
+            ||
+
+            (visitor.host || "")
+                .toLowerCase()
+                .includes(searchTerm)
+
+            ||
+
+            (visitor.phone || "")
+                .toLowerCase()
+                .includes(searchTerm)
+
+            ||
+
+            (visitor.nationalId || "")
+                .toLowerCase()
+                .includes(searchTerm)
+        );
+
+    const tableContainer =
+        document.querySelector(".card.shadow-sm:last-child");
+
+    if (tableContainer) {
+        tableContainer.outerHTML =
+            visitorTable(filteredVisitors);
+    }
+});
+
+document.addEventListener("click", async (event) => {
+
+    const searchButton =
+        event.target.closest("#searchBtn");
+
+    if (!searchButton) {
+        return;
+    }
+
+    try {
+
+        const searchTerm =
+            document
+                .getElementById("searchInput")
+                .value
+                .toLowerCase()
+                .trim();
+
+        const visitors =
+            await getVisitors();
+
+        const filteredVisitors =
+            visitors.filter(visitor =>
+                (visitor.name || "")
+                    .toLowerCase()
+                    .includes(searchTerm)
+
+                ||
+
+                (visitor.company || "")
+                    .toLowerCase()
+                    .includes(searchTerm)
+
+                ||
+
+                (visitor.host || "")
+                    .toLowerCase()
+                    .includes(searchTerm)
+
+                ||
+
+                (visitor.phone || "")
+                    .toLowerCase()
+                    .includes(searchTerm)
+
+                ||
+
+                (visitor.nationalId || "")
+                    .toLowerCase()
+                    .includes(searchTerm)
+            );
+
+        const pageContent = `
+            ${searchBar()}
+            ${visitorTable(filteredVisitors)}
+        `;
+
+        loadLayout(
+            "Visitors",
+            pageContent
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Search failed:",
+            error
+        );
+
+        Swal.fire({
+            icon: "error",
+            title: "Search Failed",
+            text:
+                "Unable to perform the search."
+        });
+    }
+});
 
 /* =========================================
    DELETE VISITOR
