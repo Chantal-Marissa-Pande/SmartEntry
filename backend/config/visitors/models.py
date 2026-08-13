@@ -71,6 +71,11 @@ class Visitor(models.Model):
         auto_now=True
     )
 
+    location = models.CharField(
+    max_length=255,
+    default="Main Reception"
+    )
+
     class Meta:
         ordering = ["-created_at"]
 

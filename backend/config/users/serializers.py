@@ -29,6 +29,16 @@ class UserAdminSerializer(serializers.ModelSerializer):
         required=False,
         allow_blank=False
     )
+    def create(self, validated_data):
+        password = validated_data.pop(
+            "password",
+            "Password123"
+        )
+        user = User.objects.create_user(
+            password=password,
+            **validated_data
+        )
+        return user
 
     class Meta:
         model = User

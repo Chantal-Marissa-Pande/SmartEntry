@@ -7,27 +7,71 @@ from .serializers import (
     EmailTokenObtainPairSerializer,
     UserProfileSerializer,
     UserSettingsSerializer,
+    UserAdminSerializer,
 )
 from .models import User
 from .models import UserSettings
 
-@api_view(["GET"])
+@api_view(["GET", "POST"])
 @permission_classes([IsAuthenticated])
 def user_list(request):
-    users = User.objects.all().order_by("date_joined")
-    data = [
-        {
-            "id":user.id,
-            "first_name":user.first_name,
-            "last_name":user.last_name,
-            "email":user.email,
-            "role":user.role,
-            "is_active":user.is_active,
-        }
-        for user in users
-    ]
+    # GET USERS
+    if request.method == "GET":
+        users = User.objects.all().order_by("date_joined")
+        serializer = UserAdminSerializer(users, many=True)
+        return Response(
+            {
+                "users":serializer.data
+            }
+        )
 
-    return Response(data)
+    #CREATE USER
+    serializer = UserAdminSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+
+        return Response(
+            serializer.data,
+            status=status.HTTP_201_CREATED
+        )
+
+    return Response(
+        serializer.errors,
+        status=status.HTTP_400_BAD_REQUEST
+    )
+
+@api_view(["PUT", "DELETE"])
+@permission_classes([IsAuthenticated])
+def user_detail(request, pk):
+    try:
+        user = User.objects.get(pk=pk)
+    except User.DoesNotExist:
+        return Response(
+            {"detail": "User not found"},
+            status=404
+        )
+
+    # UPDATE USER
+    if request.method == "PUT":
+        serializer = UserAdminSerializer(
+            user,
+            data=request.data,
+            partial=True
+        )
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(
+            serializer.errors,
+            status=400
+        )
+
+    # DELETE USER
+    user.delete()
+    return Response(
+        {"detail": "User deleted"},
+        status=204
+    )
 
 class EmailTokenObtainPairView(TokenObtainPairView):
     serializer_class = EmailTokenObtainPairSerializer

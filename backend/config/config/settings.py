@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     "visitors",
     "incidents",
     "reports",
+    "notifications",
 ]
 
 
