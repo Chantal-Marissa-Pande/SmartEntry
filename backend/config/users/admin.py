@@ -9,6 +9,10 @@ class CustomUserAdmin(UserAdmin):
 
     model = User
 
+    # =========================================
+    # USER LIST
+    # =========================================
+
     list_display = (
         "email",
         "first_name",
@@ -35,6 +39,10 @@ class CustomUserAdmin(UserAdmin):
         "email",
     )
 
+    # =========================================
+    # EDIT USER
+    # =========================================
+
     fieldsets = (
         (
             None,
@@ -52,15 +60,15 @@ class CustomUserAdmin(UserAdmin):
                 "fields": (
                     "first_name",
                     "last_name",
-                    "role",
                 )
             },
         ),
 
         (
-            "Permissions",
+            "SmartEntry Access",
             {
                 "fields": (
+                    "role",
                     "is_active",
                     "is_staff",
                     "is_superuser",
@@ -71,15 +79,18 @@ class CustomUserAdmin(UserAdmin):
         ),
 
         (
-            "Important Dates",
+            "Activity",
             {
                 "fields": (
                     "last_login",
-                    "date_joined",
                 )
             },
         ),
     )
+
+    # =========================================
+    # ADD USER
+    # =========================================
 
     add_fieldsets = (
         (
@@ -88,7 +99,6 @@ class CustomUserAdmin(UserAdmin):
                 "classes": (
                     "wide",
                 ),
-
                 "fields": (
                     "email",
                     "first_name",

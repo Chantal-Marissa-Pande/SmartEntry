@@ -5,7 +5,9 @@ from .views import (
     UserProfileView,
     UserSettingsView,
     ChangePasswordView,
+    user_list,
 )
+from .admin_views import admin_dashboard, user_list
 
 urlpatterns = [
     path(
@@ -32,5 +34,17 @@ urlpatterns = [
         "change-password/",
         ChangePasswordView.as_view(),
         name="change-password",
+    ),
+
+    path(
+        "admin-dashboard/",
+        admin_dashboard,
+        name="admin-dashboard",
+    ),
+
+    path(
+        "users/",
+        user_list,
+        name="user-list",
     ),
 ]

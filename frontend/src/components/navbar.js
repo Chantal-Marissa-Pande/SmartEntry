@@ -1,8 +1,10 @@
+// =========================================
+// NAVBAR
+// =========================================
 export function navbar() {
     const user = getLoggedInUser();
     const displayName =
         user?.name ||
-        user?.username ||
         user?.email ||
         "User";
 
@@ -13,46 +15,49 @@ export function navbar() {
                 <!-- BRAND -->
                 <a
                     class="navbar-brand fw-bold"
-                    href="/dashboard.html">
+                    href="/src/pages/dashboard.html">
                     SmartEntry
                 </a>
 
                 <!-- RIGHT SIDE -->
-                <div class="d-flex align-items-center">
+                <div class="d-flex align-items-center gap-3">
 
                     <!-- NOTIFICATIONS -->
-                    <button
-                        type="button"
-                        class="btn btn-link text-dark p-0 me-4 position-relative"
-                        id="notificationBtn"
-                        title="Notifications"
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        <i class="bi bi-bell fs-4"></i>
-                        <span
-                           id="notificationBadge"
-                           class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none">
-                           0
-                        </span> 
-                    </button>
+                    <div class="dropdown">
+                        <button
+                            type="button"
+                            class="btn btn-link text-dark p-0 position-relative"
+                            id="notificationBtn"
+                            title="Notifications"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <i class="bi bi-bell fs-4"></i>
+                            <span
+                                id="notificationBadge"
+                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none">
+                                0
+                            </span>
+                        </button>
 
-                    <ul
-                        class="dropdown-menu dropdown-menu-end"
-                        id="notificationMenu"
-                        style"min-width:320px;">
-                        <li>
-                            <h6 class="dropdown-header">
-                                Notifications
-                            </h6>
-                        </li>
-                        <li>
-                            <div class="dropdown-item text-muted text-center py-3">
-                                No new notifications
-                            </div>
-                        </li>
+                        <ul
+                            class="dropdown-menu dropdown-menu-end"
+                            id="notificationMenu"
+                            style="min-width:320px;">
 
-                    </ul>
-                </div>
+                            <li>
+                                <h6 class="dropdown-header">
+                                    Notifications
+                                </h6>
+                            </li>
+
+                            <li>
+                                <div
+                                    class="dropdown-item text-muted text-center py-3">
+                                    No new notifications
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
 
                     <!-- USER DROPDOWN -->
                     <div class="dropdown">
@@ -64,18 +69,29 @@ export function navbar() {
                             <i class="bi bi-person-circle me-1"></i>
                             ${displayName}
                         </button>
+
                         <ul class="dropdown-menu dropdown-menu-end">
 
                             <!-- PROFILE -->
                             <li>
                                 <a
                                     class="dropdown-item"
-                                    href="/profile.html"
-                                    id="profileBtn">
+                                    href="/src/pages/profile.html">
                                     <i class="bi bi-person me-2"></i>
                                     Profile
                                 </a>
                             </li>
+
+                            <!-- SETTINGS -->
+                            <li>
+                                <a
+                                    class="dropdown-item"
+                                    href="/src/pages/settings.html">
+                                    <i class="bi bi-gear me-2"></i>
+                                    Settings
+                                </a>
+                            </li>
+
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
@@ -98,30 +114,36 @@ export function navbar() {
     `;
 }
 
-/* =========================================
-   GET LOGGED-IN USER
-========================================= */
+// =========================================
+// GET LOGGED-IN USER
+// =========================================
 function getLoggedInUser() {
     try {
-        const token = localStorage.getItem("accessToken");
+        const token =
+            localStorage.getItem("accessToken");
         if (!token) {
             return null;
         }
 
-        const payload = JSON.parse(
-            atob(
-                token
-                    .split(".")[1]
-                    .replace(/-/g, "+")
-                    .replace(/_/g, "/")
-            )
-        );
+        const payload =
+            JSON.parse(
+                atob(
+                    token
+                        .split(".")[1]
+                        .replace(/-/g, "+")
+                        .replace(/_/g, "/")
+                )
+            );
 
         return {
             id: payload.user_id,
-            username: payload.username,
             email: payload.email,
-            name: payload.name
+            first_name: payload.first_name,
+            last_name: payload.last_name,
+            role: payload.role,
+            name:
+                `${payload.first_name || ""} ${payload.last_name || ""}`
+                    .trim()
         };
 
     } catch (error) {
@@ -133,11 +155,10 @@ function getLoggedInUser() {
     }
 }
 
-/* =========================================
-   LOGOUT
-========================================= */
+// =========================================
+// LOGOUT
+// =========================================
 document.addEventListener("click", (event) => {
-
     const logoutButton =
         event.target.closest("#logoutBtn");
     if (!logoutButton) {
@@ -145,10 +166,9 @@ document.addEventListener("click", (event) => {
     }
     event.preventDefault();
 
-    // Remove authentication tokens
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
 
-    // Redirect to login
-    window.location.href = "/login.html";
+    window.location.href =
+        "/login.html";
 });
