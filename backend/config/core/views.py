@@ -3,7 +3,7 @@ from django.utils import timezone
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
+from incidents.models import Incident
 from visitors.models import Visitor
 
 
@@ -62,6 +62,26 @@ class DashboardView(APIView):
             })
 
         # -----------------------------
+        # Recent incidents
+        # -----------------------------
+
+        recent_incidents = Incident.objects.order_by(
+            "-created_at"
+        )[:5]
+
+        incidents_data = []
+
+        for incident in recent_incidents:
+            incidents_data.append({
+                "id": incident.id,
+                "incident_type": incident.incident_type,
+                "location": incident.location,
+                "priority": incident.priority,
+                "status": incident.status,
+                "date": incident.date,
+            })
+
+        # -----------------------------
         # Dashboard response
         # -----------------------------
 
@@ -76,7 +96,5 @@ class DashboardView(APIView):
 
             "recent_visitors": visitors_data,
 
-            # Incidents will be connected
-            # when the incidents API is ready.
-            "incidents": []
+            "incidents": incidents_data
         })

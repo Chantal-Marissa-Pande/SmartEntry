@@ -1,6 +1,6 @@
 import { statusBadge } from "./statusBadge.js";
 
-export function visitorsTable(visitors = []) {
+export function dashboardVisitorTable(visitors = []) {
     const rows = visitors.map(visitor => {
 
         return `

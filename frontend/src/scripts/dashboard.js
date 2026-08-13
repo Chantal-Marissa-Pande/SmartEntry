@@ -1,7 +1,7 @@
 import { loadLayout } from "../components/layout.js";
 import { statCards } from "../components/statCards.js";
-import { visitorsTable } from "../components/visitorsTable.js";
-import { incidentTable } from "../components/incidentTable.js";
+import { dashboardVisitorTable } from "../components/dashboardVisitorTable.js";
+import { dashboardIncidentTable } from "../components/dashboardIncidentTable.js";
 import api from "../services/api.js";
 
 /* =========================================
@@ -32,13 +32,13 @@ async function loadDashboard() {
 
             <div class="row">
                 <div class="col-lg-7 mb-4">
-                    ${visitorsTable(
+                    ${dashboardVisitorTable(
                         recentVisitors
                     )}
                 </div>
 
                 <div class="col-lg-5 mb-4">
-                    ${incidentTable(
+                    ${dashboardIncidentTable(
                         incidents
                     )}
                 </div>
