@@ -14,6 +14,8 @@ function normalizeVisitor(visitor) {
         host: visitor.host,
         purpose: visitor.purpose,
         visitorType: visitor.visitor_type,
+        department: visitor.location,
+        location: visitor.location,
         expectedTime: visitor.expected_time,
         status: visitor.status,
         createdAt: visitor.created_at,
@@ -59,6 +61,7 @@ export async function addVisitor(visitor) {
                 national_id:
                     visitor.nationalId,
                 host: visitor.host,
+                location: visitor.department,
                 purpose: visitor.purpose,
                 visitor_type:
                     visitor.visitorType,
@@ -90,6 +93,7 @@ export async function updateVisitor(
                 national_id:
                     visitor.nationalId,
                 host: visitor.host,
+                location: visitor.department,
                 purpose: visitor.purpose,
                 visitor_type:
                     visitor.visitorType,

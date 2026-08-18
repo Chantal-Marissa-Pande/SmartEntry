@@ -216,6 +216,12 @@ document.addEventListener("submit", async (event) => {
             .value
             .trim();
 
+    const department =
+        document
+            .getElementById("visitorDepartment")
+            .value
+            .trim();
+
     const expectedDate =
         document
             .getElementById("expectedDate")
@@ -247,6 +253,7 @@ document.addEventListener("submit", async (event) => {
         !nationalId ||
         !purpose ||
         !host ||
+        !department ||
         !expectedDate ||
         !expectedTime ||
         !visitorType
@@ -288,6 +295,8 @@ document.addEventListener("submit", async (event) => {
         purpose,
 
         host,
+
+        department,
 
         expectedTime:
             combinedExpectedTime,
@@ -527,6 +536,12 @@ document.addEventListener("input", async (event) => {
 
             ||
 
+            (visitor.department || visitor.location || "")
+                .toLowerCase()
+                .includes(searchTerm)
+
+            ||
+
             (visitor.phone || "")
                 .toLowerCase()
                 .includes(searchTerm)
@@ -583,6 +598,12 @@ document.addEventListener("click", async (event) => {
                 ||
 
                 (visitor.host || "")
+                    .toLowerCase()
+                    .includes(searchTerm)
+
+                ||
+
+                (visitor.department || visitor.location || "")
                     .toLowerCase()
                     .includes(searchTerm)
 

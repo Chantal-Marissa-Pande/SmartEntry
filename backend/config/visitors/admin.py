@@ -9,6 +9,7 @@ class VisitorAdmin(admin.ModelAdmin):
         "name",
         "company",
         "host",
+        "location",
         "visitor_type",
         "status",
         "expected_time",
@@ -18,6 +19,7 @@ class VisitorAdmin(admin.ModelAdmin):
     list_filter = (
         "status",
         "visitor_type",
+        "location",
         "created_at",
     )
 
@@ -25,6 +27,7 @@ class VisitorAdmin(admin.ModelAdmin):
         "name",
         "company",
         "host",
+        "location",
         "phone",
         "national_id",
     )

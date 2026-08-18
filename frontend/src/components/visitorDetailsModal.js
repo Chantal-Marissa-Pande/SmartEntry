@@ -83,6 +83,15 @@ export function visitorDetailsModal(visitor) {
 
                             <div class="col-md-6">
                                 <label class="text-muted small">
+                                    Department
+                                </label>
+                                <p class="fw-semibold">
+                                    ${visitor.department || visitor.location || "-"}
+                                </p>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="text-muted small">
                                     Visitor Type
                                 </label>
                                 <p class="fw-semibold">

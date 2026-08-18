@@ -23,6 +23,10 @@ export function visitorTable(visitors = []) {
             </td>
 
             <td>
+                ${visitor.department || visitor.location || "-"}
+            </td>
+
+            <td>
                 ${visitor.purpose || "-"}
             </td>
 
@@ -84,6 +88,7 @@ export function visitorTable(visitors = []) {
                             <th>Phone</th>
                             <th>National ID</th>
                             <th>Host</th>
+                            <th>Department</th>
                             <th>Purpose</th>
                             <th>Type</th>
                             <th>Expected Time</th>
@@ -97,7 +102,7 @@ export function visitorTable(visitors = []) {
                             rows || `
                                 <tr>
                                     <td
-                                        colspan="10"
+                                        colspan="11"
                                         class="text-center text-muted py-4">
                                         <i class="bi bi-people fs-4 d-block mb-2"></i>
                                         No visitors found.

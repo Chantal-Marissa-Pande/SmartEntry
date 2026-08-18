@@ -159,6 +159,35 @@ export function visitorModal(visitor = null) {
                                 <!-- EXPECTED DATE -->
                                 <div class="col-md-6">
                                     <label
+                                        for="visitorDepartment"
+                                        class="form-label">
+                                        Department
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="visitorDepartment"
+                                        class="form-control"
+                                        list="departmentOptions"
+                                        value="${visitor?.department || visitor?.location || ""}"
+                                        placeholder="Select or enter a department"
+                                        required>
+
+                                    <datalist id="departmentOptions">
+                                        <option value="Administration">
+                                        <option value="Finance">
+                                        <option value="Human Resources">
+                                        <option value="Information Technology">
+                                        <option value="Operations">
+                                        <option value="Procurement">
+                                        <option value="Sales & Marketing">
+                                        <option value="Security">
+                                    </datalist>
+                                </div>
+
+                                <!-- EXPECTED DATE -->
+                                <div class="col-md-6">
+                                    <label
                                         for="expectedDate"
                                         class="form-label">
                                         Expected Date

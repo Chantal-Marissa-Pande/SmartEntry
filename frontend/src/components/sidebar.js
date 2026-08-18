@@ -66,6 +66,17 @@ export function sidebar() {
             </a>
 
             <a
+                href="/src/pages/analytics.html"
+                class="menu-item ${
+                    isActive("analytics")
+                        ? "active"
+                        : ""
+                }">
+                <i class="bi bi-bar-chart-line me-2"></i>
+                Analytics
+            </a>
+
+            <a
                 href="/src/pages/settings.html"
                 class="menu-item ${
                     isActive("settings")

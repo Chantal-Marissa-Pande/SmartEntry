@@ -1,0 +1,87 @@
+[
+  {
+    "model": "visitors.visitor",
+    "fields": {
+      "name": "Amina Hassan",
+      "company": "Nexus Consulting",
+      "phone": "+254 712 345 601",
+      "national_id": "SEED-1001",
+      "purpose": "Project planning meeting",
+      "host": "Daniel Mwangi",
+      "expected_time": "2026-08-18T09:00:00Z",
+      "visitor_type": "Guest",
+      "status": "Checked In",
+      "location": "Operations",
+      "created_at": "2026-08-18T07:45:00Z",
+      "updated_at": "2026-08-18T08:55:00Z"
+    }
+  },
+  {
+    "model": "visitors.visitor",
+    "fields": {
+      "name": "Brian Otieno",
+      "company": "Cloudline Systems",
+      "phone": "+254 722 345 602",
+      "national_id": "SEED-1002",
+      "purpose": "Network maintenance",
+      "host": "Mercy Wanjiku",
+      "expected_time": "2026-08-18T10:30:00Z",
+      "visitor_type": "Contractor",
+      "status": "Expected",
+      "location": "Information Technology",
+      "created_at": "2026-08-17T13:20:00Z",
+      "updated_at": "2026-08-17T13:20:00Z"
+    }
+  },
+  {
+    "model": "visitors.visitor",
+    "fields": {
+      "name": "Carol Njeri",
+      "company": "Independent",
+      "phone": "+254 733 345 603",
+      "national_id": "SEED-1003",
+      "purpose": "Job interview",
+      "host": "Peter Kamau",
+      "expected_time": "2026-08-18T11:00:00Z",
+      "visitor_type": "Interview",
+      "status": "Expected",
+      "location": "Human Resources",
+      "created_at": "2026-08-16T09:15:00Z",
+      "updated_at": "2026-08-16T09:15:00Z"
+    }
+  },
+  {
+    "model": "visitors.visitor",
+    "fields": {
+      "name": "David Kiptoo",
+      "company": "Prime Office Supplies",
+      "phone": "+254 711 345 604",
+      "national_id": "SEED-1004",
+      "purpose": "Invoice and supplies review",
+      "host": "Ruth Muthoni",
+      "expected_time": "2026-08-17T14:00:00Z",
+      "visitor_type": "Vendor",
+      "status": "Checked Out",
+      "location": "Procurement",
+      "created_at": "2026-08-15T10:30:00Z",
+      "updated_at": "2026-08-17T15:30:00Z"
+    }
+  },
+  {
+    "model": "visitors.visitor",
+    "fields": {
+      "name": "Esther Achieng",
+      "company": "BrightPath Media",
+      "phone": "+254 700 345 605",
+      "national_id": "SEED-1005",
+      "purpose": "Campaign presentation",
+      "host": "James Kariuki",
+      "expected_time": "2026-08-16T15:00:00Z",
+      "visitor_type": "Guest",
+      "status": "Checked Out",
+      "location": "Sales & Marketing",
+      "created_at": "2026-08-14T12:10:00Z",
+      "updated_at": "2026-08-16T16:20:00Z"
+    }
+  }
+]

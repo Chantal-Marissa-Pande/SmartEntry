@@ -14,6 +14,7 @@ class VisitorSerializer(serializers.ModelSerializer):
             "national_id",
             "purpose",
             "host",
+            "location",
             "expected_time",
             "visitor_type",
             "status",
