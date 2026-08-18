@@ -11,6 +11,9 @@ export function sidebar() {
     const isAdmin =
         user?.role === "admin";
 
+    const isPlatformAdmin =
+        user?.email?.toLowerCase() === "admin@smartentry.com";
+
     const isActive = (page) => {
         return currentPath.includes(
             `/src/pages/${page}.html`
@@ -66,6 +69,13 @@ export function sidebar() {
             </a>
 
             <a
+                href="/src/pages/intelligence.html"
+                class="menu-item ${isActive("intelligence") ? "active" : ""}">
+                <i class="bi bi-stars me-2"></i>
+                Intelligence
+            </a>
+
+            <a
                 href="/src/pages/analytics.html"
                 class="menu-item ${
                     isActive("analytics")
@@ -115,6 +125,15 @@ export function sidebar() {
                             <i class="bi bi-person-gear me-2"></i>
                             User Management
                         </a>
+
+                        ${isPlatformAdmin ? `
+                            <a
+                                href="/src/pages/organizations.html"
+                                class="menu-item ${isActive("organizations") ? "active" : ""}">
+                                <i class="bi bi-buildings me-2"></i>
+                                Organizations
+                            </a>
+                        ` : ""}
                     </div>
                 `
                 : ""

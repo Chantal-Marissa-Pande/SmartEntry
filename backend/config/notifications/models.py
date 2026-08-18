@@ -58,6 +58,9 @@ class Notification(models.Model):
     def __str__(self):
         return f"{self.title} - {self.user}"
 
+    class Meta:
+        ordering = ["-created_at"]
+
 class IntelligenceAlert(models.Model):
 
     ALERT_TYPES = [
@@ -91,5 +94,32 @@ class IntelligenceAlert(models.Model):
         default=True
     )
 
+    source_organization = models.ForeignKey(
+        "users.Organization",
+        on_delete=models.SET_NULL,
+        related_name="intelligence_alerts",
+        null=True,
+        blank=True,
+    )
+
+    related_incident = models.ForeignKey(
+        "incidents.Incident",
+        on_delete=models.SET_NULL,
+        related_name="intelligence_alerts",
+        null=True,
+        blank=True,
+    )
+
+    related_visitor = models.ForeignKey(
+        "visitors.Visitor",
+        on_delete=models.SET_NULL,
+        related_name="intelligence_alerts",
+        null=True,
+        blank=True,
+    )
+
     def __str__(self):
         return self.title
+
+    class Meta:
+        ordering = ["-created_at"]

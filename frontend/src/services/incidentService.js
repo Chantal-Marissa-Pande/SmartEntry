@@ -8,6 +8,8 @@ function normalizeIncident(incident) {
         id: incident.id,
         type: incident.incident_type,
         location: incident.location,
+        organizationId: incident.organization,
+        organizationName: incident.organization_name,
         date: incident.date,
         time: incident.time,
         description: incident.description,

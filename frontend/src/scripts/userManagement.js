@@ -1,13 +1,26 @@
 import { loadLayout } from "../components/layout.js";
 import api from "../services/api.js";
+import { getOrganizations } from "../services/organizationService.js";
+
+let managedUsers = [];
+let managedOrganizations = [];
+
+function organizationOptions(selected = "") {
+    return managedOrganizations.map((organization) => `<option value="${organization.id}" ${Number(selected) === organization.id ? "selected" : ""}>${organization.name}</option>`).join("");
+}
 
 // =========================================
 // LOAD USERS
 // =========================================
 async function loadUsers() {
     try {
-        const response = await api.get("/auth/users/");
+        const [response, organizations] = await Promise.all([
+            api.get("/auth/users/"),
+            getOrganizations()
+        ]);
         const users = response.data?.users || [];
+        managedUsers = users;
+        managedOrganizations = organizations;
 
         const content = `
             <div class="card shadow-sm">
@@ -36,6 +49,7 @@ async function loadUsers() {
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Role</th>
+                                    <th>Organization</th>
                                     <th>Status</th>
                                     <th width="250">
                                         Actions
@@ -62,6 +76,8 @@ async function loadUsers() {
                                                 ${user.role}
                                             </span>
                                         </td>
+
+                                        <td>${user.organization_name || "Unassigned"}</td>
 
                                         <td>
                                             ${
@@ -248,6 +264,11 @@ async function showAddUserModal() {
                     </option>
 
                 </select>
+
+                <select id="organization" class="swal2-input">
+                    <option value="">Select organization</option>
+                    ${organizationOptions()}
+                </select>
             `,
 
             showCancelButton: true,
@@ -266,7 +287,10 @@ async function showAddUserModal() {
                     document.getElementById("password").value,
 
                 role:
-                    document.getElementById("role").value
+                    document.getElementById("role").value,
+
+                organization:
+                    document.getElementById("organization").value || null
             })
         });
 
@@ -304,6 +328,8 @@ async function showAddUserModal() {
 // =========================================
 async function editUser(id) {
 
+    const user = managedUsers.find((item) => item.id === Number(id));
+
     const { value } =
         await Swal.fire({
 
@@ -314,22 +340,26 @@ async function editUser(id) {
                     id="role"
                     class="swal2-input">
 
-                    <option value="admin">
+                    <option value="admin" ${user?.role === "admin" ? "selected" : ""}>
                         Admin
                     </option>
 
-                    <option value="security">
+                    <option value="security" ${user?.role === "security" ? "selected" : ""}>
                         Security
                     </option>
 
-                    <option value="reception">
+                    <option value="reception" ${user?.role === "reception" ? "selected" : ""}>
                         Reception
                     </option>
 
-                    <option value="manager">
+                    <option value="manager" ${user?.role === "manager" ? "selected" : ""}>
                         Manager
                     </option>
 
+                </select>
+
+                <select id="organization" class="swal2-input">
+                    ${organizationOptions(user?.organization)}
                 </select>
             `,
 
@@ -337,7 +367,10 @@ async function editUser(id) {
 
             preConfirm: () => ({
                 role:
-                    document.getElementById("role").value
+                    document.getElementById("role").value,
+
+                organization:
+                    document.getElementById("organization").value || null
             })
         });
 

@@ -7,10 +7,11 @@ from .views import (
     ChangePasswordView,
     user_list,
     user_detail,
+    organization_list,
+    organization_detail,
 )
 from .admin_views import (
     admin_dashboard,
-    user_list,
 )
 
 # ========================================================
@@ -68,4 +69,6 @@ urlpatterns = [
         user_detail,
         name="user_detail"
     ),
+    path("organizations/", organization_list, name="organizations"),
+    path("organizations/<int:pk>/", organization_detail, name="organization-detail"),
 ]

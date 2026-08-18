@@ -6,6 +6,8 @@ from .models import User
 from incidents.models import Incident
 from visitors.models import Visitor
 from .serializers import UserAdminSerializer
+from .tenancy import organization_queryset
+from .permissions import is_platform_admin
 
 # ============================================================
 # ADMIN DASHBOARD
@@ -25,27 +27,31 @@ def admin_dashboard(request):
             status=403,
         )
 
+    users = User.objects.all() if is_platform_admin(request.user) else User.objects.filter(organization=request.user.organization)
+    visitors = organization_queryset(Visitor.objects.all(), request.user)
+    incidents = organization_queryset(Incident.objects.all(), request.user)
+
     # =========================================
     # USER STATISTICS
     # =========================================
-    total_users = User.objects.count()
-    active_users = User.objects.filter(
+    total_users = users.count()
+    active_users = users.filter(
         is_active=True
     ).count()
-    inactive_users = User.objects.filter(
+    inactive_users = users.filter(
         is_active=False
     ).count()
     users_by_role = {
-        "admin": User.objects.filter(
+        "admin": users.filter(
             role=User.Role.ADMIN
         ).count(),
-        "security": User.objects.filter(
+        "security": users.filter(
             role=User.Role.SECURITY
         ).count(),
-        "reception": User.objects.filter(
+        "reception": users.filter(
             role=User.Role.RECEPTION
         ).count(),
-        "manager": User.objects.filter(
+        "manager": users.filter(
             role=User.Role.MANAGER
         ).count(),
     }
@@ -53,38 +59,38 @@ def admin_dashboard(request):
     # =========================================
     # VISITOR STATISTICS
     # =========================================
-    total_visitors = Visitor.objects.count()
-    checked_in_visitors = Visitor.objects.filter(
+    total_visitors = visitors.count()
+    checked_in_visitors = visitors.filter(
         status="Checked In"
     ).count()
-    checked_out_visitors = Visitor.objects.filter(
+    checked_out_visitors = visitors.filter(
         status="Checked Out"
     ).count()
 
     # =========================================
     # INCIDENT STATISTICS
     # =========================================
-    total_incidents = Incident.objects.count()
-    open_incidents = Incident.objects.filter(
+    total_incidents = incidents.count()
+    open_incidents = incidents.filter(
         status="Open"
     ).count()
-    investigating_incidents = Incident.objects.filter(
+    investigating_incidents = incidents.filter(
         status="Investigating"
     ).count()
-    resolved_incidents = Incident.objects.filter(
+    resolved_incidents = incidents.filter(
         status="Resolved"
     ).count()
-    critical_incidents = Incident.objects.filter(
+    critical_incidents = incidents.filter(
         priority="Critical"
     ).count()
-    high_priority_incidents = Incident.objects.filter(
+    high_priority_incidents = incidents.filter(
         priority="High"
     ).count()
 
     # =========================================
     # RECENT USERS
     # =========================================
-    recent_users_queryset = User.objects.order_by(
+    recent_users_queryset = users.order_by(
         "-date_joined"
     )[:10]
     recent_users = []
@@ -104,7 +110,7 @@ def admin_dashboard(request):
     # RECENT INCIDENTS
     # =========================================
     recent_incidents_queryset = (
-        Incident.objects
+        incidents
         .select_related("reported_by")
         .order_by("-created_at")[:10]
     )

@@ -1,5 +1,6 @@
 import { navbar } from "./navbar.js";
 import { sidebar } from "./sidebar.js";
+import { initializeNotificationCenter } from "./notificationCenter.js";
 
 export function loadLayout(title, content) {
     const user =
@@ -45,6 +46,8 @@ export function loadLayout(title, content) {
 
     document.getElementById("sidebar").innerHTML =
         sidebar();
+
+    initializeNotificationCenter();
 }
 
 // =========================================

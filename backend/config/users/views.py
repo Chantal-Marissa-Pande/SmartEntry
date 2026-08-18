@@ -1,4 +1,6 @@
 from rest_framework.decorators import api_view, permission_classes
+from django.db.models import Count
+from django.utils.text import slugify
 from rest_framework import generics, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -8,16 +10,24 @@ from .serializers import (
     UserProfileSerializer,
     UserSettingsSerializer,
     UserAdminSerializer,
+    OrganizationSerializer,
 )
-from .models import User
+from .models import Organization, User
 from .models import UserSettings
+from .permissions import is_platform_admin
 
 @api_view(["GET", "POST"])
 @permission_classes([IsAuthenticated])
 def user_list(request):
+    if request.user.role != User.Role.ADMIN:
+        return Response({"detail": "Administrator access is required."}, status=403)
+
     # GET USERS
     if request.method == "GET":
-        users = User.objects.all().order_by("date_joined")
+        users = User.objects.select_related("organization")
+        if not is_platform_admin(request.user):
+            users = users.filter(organization=request.user.organization)
+        users = users.order_by("date_joined")
         serializer = UserAdminSerializer(users, many=True)
         return Response(
             {
@@ -26,7 +36,10 @@ def user_list(request):
         )
 
     #CREATE USER
-    serializer = UserAdminSerializer(data=request.data)
+    data = request.data.copy()
+    if not is_platform_admin(request.user):
+        data["organization"] = request.user.organization_id
+    serializer = UserAdminSerializer(data=data)
     if serializer.is_valid():
         serializer.save()
 
@@ -43,8 +56,13 @@ def user_list(request):
 @api_view(["PUT", "DELETE"])
 @permission_classes([IsAuthenticated])
 def user_detail(request, pk):
+    if request.user.role != User.Role.ADMIN:
+        return Response({"detail": "Administrator access is required."}, status=403)
     try:
-        user = User.objects.get(pk=pk)
+        users = User.objects.all()
+        if not is_platform_admin(request.user):
+            users = users.filter(organization=request.user.organization)
+        user = users.get(pk=pk)
     except User.DoesNotExist:
         return Response(
             {"detail": "User not found"},
@@ -53,9 +71,12 @@ def user_detail(request, pk):
 
     # UPDATE USER
     if request.method == "PUT":
+        data = request.data.copy()
+        if not is_platform_admin(request.user):
+            data["organization"] = request.user.organization_id
         serializer = UserAdminSerializer(
             user,
-            data=request.data,
+            data=data,
             partial=True
         )
         if serializer.is_valid():
@@ -72,6 +93,53 @@ def user_detail(request, pk):
         {"detail": "User deleted"},
         status=204
     )
+
+
+@api_view(["GET", "POST"])
+@permission_classes([IsAuthenticated])
+def organization_list(request):
+    if not is_platform_admin(request.user):
+        return Response({"detail": "Only the SmartEntry platform administrator can manage organizations."}, status=403)
+
+    if request.method == "GET":
+        organizations = Organization.objects.annotate(
+            user_count=Count("users", distinct=True),
+            visitor_count=Count("visitors", distinct=True),
+            incident_count=Count("incidents", distinct=True),
+        )
+        return Response(OrganizationSerializer(organizations, many=True).data)
+
+    data = request.data.copy()
+    data["slug"] = data.get("slug") or slugify(data.get("name", ""))
+    serializer = OrganizationSerializer(data=data)
+    serializer.is_valid(raise_exception=True)
+    serializer.save()
+    return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+@api_view(["PATCH", "DELETE"])
+@permission_classes([IsAuthenticated])
+def organization_detail(request, pk):
+    if not is_platform_admin(request.user):
+        return Response({"detail": "Only the SmartEntry platform administrator can manage organizations."}, status=403)
+
+    try:
+        organization = Organization.objects.get(pk=pk)
+    except Organization.DoesNotExist:
+        return Response({"detail": "Organization not found."}, status=404)
+
+    if request.method == "DELETE":
+        organization.is_active = False
+        organization.save(update_fields=["is_active"])
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+    data = request.data.copy()
+    if data.get("name") and not data.get("slug"):
+        data["slug"] = slugify(data["name"])
+    serializer = OrganizationSerializer(organization, data=data, partial=True)
+    serializer.is_valid(raise_exception=True)
+    serializer.save()
+    return Response(serializer.data)
 
 class EmailTokenObtainPairView(TokenObtainPairView):
     serializer_class = EmailTokenObtainPairSerializer

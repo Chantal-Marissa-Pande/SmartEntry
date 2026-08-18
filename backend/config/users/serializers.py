@@ -1,7 +1,22 @@
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
-from .models import User, UserSettings
+from .models import Organization, User, UserSettings
+from .permissions import is_platform_admin
+
+
+class OrganizationSerializer(serializers.ModelSerializer):
+    user_count = serializers.IntegerField(read_only=True)
+    visitor_count = serializers.IntegerField(read_only=True)
+    incident_count = serializers.IntegerField(read_only=True)
+
+    class Meta:
+        model = Organization
+        fields = [
+            "id", "name", "slug", "is_active", "created_at",
+            "user_count", "visitor_count", "incident_count",
+        ]
+        read_only_fields = ["id", "created_at", "user_count", "visitor_count", "incident_count"]
 
 
 class EmailTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -16,6 +31,9 @@ class EmailTokenObtainPairSerializer(TokenObtainPairSerializer):
         token["first_name"] = user.first_name
         token["last_name"] = user.last_name
         token["role"] = user.role
+        token["organization_id"] = user.organization_id
+        token["organization_name"] = user.organization.name if user.organization else None
+        token["platform_admin"] = is_platform_admin(user)
 
         return token
 
@@ -29,6 +47,7 @@ class UserAdminSerializer(serializers.ModelSerializer):
         required=False,
         allow_blank=False
     )
+    organization_name = serializers.CharField(source="organization.name", read_only=True)
     def create(self, validated_data):
         password = validated_data.pop(
             "password",
@@ -49,6 +68,8 @@ class UserAdminSerializer(serializers.ModelSerializer):
             "last_name",
             "email",
             "role",
+            "organization",
+            "organization_name",
             "is_active",
             "is_staff",
             "date_joined",
@@ -67,6 +88,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
         source="get_role_display",
         read_only=True
     )
+    organization_name = serializers.CharField(source="organization.name", read_only=True)
 
     class Meta:
         model = User
@@ -78,6 +100,8 @@ class UserProfileSerializer(serializers.ModelSerializer):
             "email",
             "role",
             "role_display",
+            "organization",
+            "organization_name",
         ]
 
         read_only_fields = [
@@ -85,6 +109,8 @@ class UserProfileSerializer(serializers.ModelSerializer):
             "email",
             "role",
             "role_display",
+            "organization",
+            "organization_name",
         ]
 
 class UserSettingsSerializer(serializers.ModelSerializer):

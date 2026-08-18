@@ -21,6 +21,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-4j!r$=24uo*m_cru9r_#p_t&h!v9fn-q@9^h$f3!yy)%h*e56v'
 
+PLATFORM_ADMIN_EMAIL = "admin@smartentry.com"
+
 DEBUG = True
 
 ALLOWED_HOSTS = [

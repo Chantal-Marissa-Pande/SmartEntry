@@ -3,6 +3,7 @@ from .models import Incident
 
 class IncidentSerializer(serializers.ModelSerializer):
     reported_by_name = serializers.SerializerMethodField()
+    organization_name = serializers.CharField(source="organization.name", read_only=True)
 
     class Meta:
         model = Incident
@@ -17,6 +18,8 @@ class IncidentSerializer(serializers.ModelSerializer):
             "status",
             "reported_by",
             "reported_by_name",
+            "organization",
+            "organization_name",
             "created_at",
             "updated_at",
         ]
@@ -25,6 +28,8 @@ class IncidentSerializer(serializers.ModelSerializer):
             "id",
             "reported_by",
             "reported_by_name",
+            "organization",
+            "organization_name",
             "created_at",
             "updated_at",
         ]

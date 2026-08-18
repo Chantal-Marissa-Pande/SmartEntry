@@ -76,6 +76,14 @@ class Visitor(models.Model):
     default="Main Reception"
     )
 
+    organization = models.ForeignKey(
+        "users.Organization",
+        on_delete=models.PROTECT,
+        related_name="visitors",
+        null=True,
+        blank=True,
+    )
+
     class Meta:
         ordering = ["-created_at"]
 

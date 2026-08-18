@@ -16,6 +16,8 @@ function normalizeVisitor(visitor) {
         visitorType: visitor.visitor_type,
         department: visitor.location,
         location: visitor.location,
+        organizationId: visitor.organization,
+        organizationName: visitor.organization_name,
         expectedTime: visitor.expected_time,
         status: visitor.status,
         createdAt: visitor.created_at,

@@ -53,6 +53,14 @@ class Incident(models.Model):
         related_name="reported_incidents"
     )
 
+    organization = models.ForeignKey(
+        "users.Organization",
+        on_delete=models.PROTECT,
+        related_name="incidents",
+        null=True,
+        blank=True,
+    )
+
     created_at = models.DateTimeField(
         auto_now_add=True
     )

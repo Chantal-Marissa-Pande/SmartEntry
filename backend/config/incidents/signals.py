@@ -11,16 +11,20 @@ from notifications.intelligence import (
 )
 
 @receiver(post_save, sender=Incident)
-def incident_created(sender, instance, created, **kwargs):
-    if not created:
+def incident_created(sender, instance, created, raw=False, **kwargs):
+    if not created or raw:
         return
     recipients = User.objects.filter(
+        organization=instance.organization,
         role__in=[
             User.Role.ADMIN,
             User.Role.SECURITY
         ]
     )
     for user in recipients:
+        settings = getattr(user, "settings", None)
+        if settings and not settings.incident_notifications:
+            continue
         create_notification(
             user=user,
             title="Security Alert",

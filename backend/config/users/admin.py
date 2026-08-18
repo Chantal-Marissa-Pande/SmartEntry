@@ -1,7 +1,14 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from .models import User
+from .models import Organization, User
+
+
+@admin.register(Organization)
+class OrganizationAdmin(admin.ModelAdmin):
+    list_display = ("name", "slug", "is_active", "created_at")
+    list_filter = ("is_active",)
+    search_fields = ("name", "slug")
 
 
 @admin.register(User)
@@ -18,6 +25,7 @@ class CustomUserAdmin(UserAdmin):
         "first_name",
         "last_name",
         "role",
+        "organization",
         "is_active",
         "is_staff",
         "date_joined",
@@ -25,6 +33,7 @@ class CustomUserAdmin(UserAdmin):
 
     list_filter = (
         "role",
+        "organization",
         "is_active",
         "is_staff",
     )
@@ -69,6 +78,7 @@ class CustomUserAdmin(UserAdmin):
             {
                 "fields": (
                     "role",
+                    "organization",
                     "is_active",
                     "is_staff",
                     "is_superuser",
@@ -104,6 +114,7 @@ class CustomUserAdmin(UserAdmin):
                     "first_name",
                     "last_name",
                     "role",
+                    "organization",
                     "password1",
                     "password2",
                     "is_active",

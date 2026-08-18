@@ -43,24 +43,14 @@ export function navbar() {
                             </span>
                         </button>
 
-                        <ul
+                        <div
                             class="dropdown-menu dropdown-menu-end"
-                            id="notificationMenu"
-                            style="min-width:320px;">
-
-                            <li>
-                                <h6 class="dropdown-header">
-                                    Notifications
-                                </h6>
-                            </li>
-
-                            <li>
-                                <div
-                                    class="dropdown-item text-muted text-center py-3">
-                                    No new notifications
-                                </div>
-                            </li>
-                        </ul>
+                            id="notificationMenu">
+                            <div class="notification-empty">
+                                <span class="spinner-border spinner-border-sm text-primary"></span>
+                                <span>Loading activity…</span>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- USER DROPDOWN -->

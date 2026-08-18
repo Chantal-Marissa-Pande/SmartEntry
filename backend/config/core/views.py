@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from incidents.models import Incident
 from visitors.models import Visitor
+from users.tenancy import organization_queryset
 
 
 User = get_user_model()
@@ -15,23 +16,25 @@ class DashboardView(APIView):
 
     def get(self, request):
         today = timezone.localdate()
+        visitors = organization_queryset(Visitor.objects.all(), request.user)
+        incidents = organization_queryset(Incident.objects.all(), request.user)
 
         # -----------------------------
         # Visitor statistics
         # -----------------------------
 
-        total_visitors = Visitor.objects.count()
+        total_visitors = visitors.count()
 
-        expected_today = Visitor.objects.filter(
+        expected_today = visitors.filter(
             expected_time__date=today,
             status="Expected"
         ).count()
 
-        checked_in = Visitor.objects.filter(
+        checked_in = visitors.filter(
             status="Checked In"
         ).count()
 
-        checked_out = Visitor.objects.filter(
+        checked_out = visitors.filter(
             status="Checked Out"
         ).count()
 
@@ -39,13 +42,14 @@ class DashboardView(APIView):
         # Users
         # -----------------------------
 
-        total_users = User.objects.count()
+        users = User.objects.all() if request.user.is_superuser else User.objects.filter(organization=request.user.organization)
+        total_users = users.count()
 
         # -----------------------------
         # Recent visitors
         # -----------------------------
 
-        recent_visitors = Visitor.objects.order_by(
+        recent_visitors = visitors.order_by(
             "-created_at"
         )[:5]
 
@@ -65,7 +69,7 @@ class DashboardView(APIView):
         # Recent incidents
         # -----------------------------
 
-        recent_incidents = Incident.objects.order_by(
+        recent_incidents = incidents.order_by(
             "-created_at"
         )[:5]
 

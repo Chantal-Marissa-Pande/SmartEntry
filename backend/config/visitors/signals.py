@@ -7,16 +7,20 @@ from notifications.services import (
 )
 
 @receiver(post_save, sender=Visitor)
-def visitor_created(sender, instance, created, **kwargs):
-    if not created:
+def visitor_created(sender, instance, created, raw=False, **kwargs):
+    if not created or raw:
         return
     recipients = User.objects.filter(
+        organization=instance.organization,
         role__in=[
             User.Role.ADMIN,
             User.Role.RECEPTION
         ]
     )
     for user in recipients:
+        settings = getattr(user, "settings", None)
+        if settings and not settings.visitor_notifications:
+            continue
         create_notification(
             user=user,
             title="Visitor Registered",

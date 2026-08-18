@@ -4,25 +4,28 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from visitors.models import Visitor
 from incidents.models import Incident
+from users.tenancy import organization_queryset
 
 class ReportsView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
+        visitors = organization_queryset(Visitor.objects.all(), request.user)
+        incidents = organization_queryset(Incident.objects.all(), request.user)
 
         # ==============================
         # VISITOR STATISTICS
         # ==============================
-        total_visitors = Visitor.objects.count()
-        checked_in_visitors = Visitor.objects.filter(
+        total_visitors = visitors.count()
+        checked_in_visitors = visitors.filter(
             status="Checked In"
         ).count()
-        checked_out_visitors = Visitor.objects.filter(
+        checked_out_visitors = visitors.filter(
             status="Checked Out"
         ).count()
 
         visitor_types = (
-            Visitor.objects
+            visitors
             .values("visitor_type")
             .annotate(count=Count("id"))
             .order_by("visitor_type")
@@ -31,29 +34,29 @@ class ReportsView(APIView):
         # ==============================
         # INCIDENT STATISTICS
         # ==============================
-        total_incidents = Incident.objects.count()
-        open_incidents = Incident.objects.filter(
+        total_incidents = incidents.count()
+        open_incidents = incidents.filter(
             status="Open"
         ).count()
-        investigating_incidents = Incident.objects.filter(
+        investigating_incidents = incidents.filter(
             status="Investigating"
         ).count()
-        resolved_incidents = Incident.objects.filter(
+        resolved_incidents = incidents.filter(
             status="Resolved"
         ).count()
-        closed_incidents = Incident.objects.filter(
+        closed_incidents = incidents.filter(
             status="Closed"
         ).count()
 
         incidents_by_priority = (
-            Incident.objects
+            incidents
             .values("priority")
             .annotate(count=Count("id"))
             .order_by("priority")
         )
 
         incidents_by_status = (
-            Incident.objects
+            incidents
             .values("status")
             .annotate(count=Count("id"))
             .order_by("status")
