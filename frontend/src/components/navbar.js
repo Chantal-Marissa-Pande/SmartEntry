@@ -174,5 +174,5 @@ document.addEventListener("click", (event) => {
     localStorage.removeItem("refreshToken");
 
     window.location.href =
-        "/login.html";
+        "/";
 });

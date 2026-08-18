@@ -18,7 +18,7 @@ export function logout() {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
 
-    window.location.href = "/src/pages/login.html";
+    window.location.href = "/";
 }
 
 export function getAccessToken() {
