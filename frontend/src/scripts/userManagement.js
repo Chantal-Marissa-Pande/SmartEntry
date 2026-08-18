@@ -5,6 +5,17 @@ import { getOrganizations } from "../services/organizationService.js";
 let managedUsers = [];
 let managedOrganizations = [];
 
+function isPlatformAdmin() {
+    try {
+        const token = localStorage.getItem("accessToken");
+        const payload = JSON.parse(atob(token.split(".")[1].replace(/-/g, "+").replace(/_/g, "/")));
+        return payload.platform_admin === true
+            || payload.email?.toLowerCase() === "admin@smartentry.com";
+    } catch {
+        return false;
+    }
+}
+
 function organizationOptions(selected = "") {
     return managedOrganizations.map((organization) => `<option value="${organization.id}" ${Number(selected) === organization.id ? "selected" : ""}>${organization.name}</option>`).join("");
 }
@@ -14,13 +25,26 @@ function organizationOptions(selected = "") {
 // =========================================
 async function loadUsers() {
     try {
-        const [response, organizations] = await Promise.all([
-            api.get("/auth/users/"),
-            getOrganizations()
-        ]);
+        const response = await api.get("/auth/users/");
         const users = response.data?.users || [];
         managedUsers = users;
-        managedOrganizations = organizations;
+        if (isPlatformAdmin()) {
+            managedOrganizations = await getOrganizations();
+        } else {
+            managedOrganizations = Array.from(
+                new Map(
+                    users
+                        .filter((user) => user.organization && user.organization_name)
+                        .map((user) => [
+                            user.organization,
+                            {
+                                id: user.organization,
+                                name: user.organization_name
+                            }
+                        ])
+                ).values()
+            );
+        }
 
         const content = `
             <div class="card shadow-sm">

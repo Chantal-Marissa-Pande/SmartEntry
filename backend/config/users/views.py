@@ -16,6 +16,19 @@ from .models import Organization, User
 from .models import UserSettings
 from .permissions import is_platform_admin
 
+
+def unique_organization_slug(value, exclude_pk=None):
+    base_slug = slugify(value) or "organization"
+    candidate = base_slug
+    suffix = 2
+    queryset = Organization.objects.all()
+    if exclude_pk is not None:
+        queryset = queryset.exclude(pk=exclude_pk)
+    while queryset.filter(slug=candidate).exists():
+        candidate = f"{base_slug}-{suffix}"
+        suffix += 1
+    return candidate
+
 @api_view(["GET", "POST"])
 @permission_classes([IsAuthenticated])
 def user_list(request):
@@ -110,7 +123,9 @@ def organization_list(request):
         return Response(OrganizationSerializer(organizations, many=True).data)
 
     data = request.data.copy()
-    data["slug"] = data.get("slug") or slugify(data.get("name", ""))
+    data["slug"] = unique_organization_slug(
+        data.get("slug") or data.get("name", "")
+    )
     serializer = OrganizationSerializer(data=data)
     serializer.is_valid(raise_exception=True)
     serializer.save()
@@ -134,8 +149,11 @@ def organization_detail(request, pk):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
     data = request.data.copy()
-    if data.get("name") and not data.get("slug"):
-        data["slug"] = slugify(data["name"])
+    if data.get("name") or data.get("slug"):
+        data["slug"] = unique_organization_slug(
+            data.get("slug") or data.get("name", organization.name),
+            exclude_pk=organization.pk,
+        )
     serializer = OrganizationSerializer(organization, data=data, partial=True)
     serializer.is_valid(raise_exception=True)
     serializer.save()

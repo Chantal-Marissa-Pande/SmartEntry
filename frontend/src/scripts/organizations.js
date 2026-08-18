@@ -12,6 +12,16 @@ function isPlatformAdmin() {
 
 const escapeHtml = (value) => String(value ?? "").replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#039;");
 
+function apiErrorMessage(error) {
+    const data = error.response?.data;
+    if (!data) return "The organization could not be saved.";
+    if (typeof data === "string") return data;
+    if (data.detail) return data.detail;
+    return Object.entries(data)
+        .map(([field, messages]) => `${field.replaceAll("_", " ")}: ${Array.isArray(messages) ? messages.join(" ") : messages}`)
+        .join("\n");
+}
+
 function render() {
     const content = `
         <div class="organization-summary mb-4"><div><span>Tenant administration</span><h3>Organizations</h3><p>Keep operational visitor and incident records isolated by organization.</p></div>${isPlatformAdmin() ? '<button id="addOrganizationBtn" class="btn btn-primary"><i class="bi bi-building-add me-2"></i>Add organization</button>' : ""}</div>
@@ -32,7 +42,7 @@ async function reload() {
 async function organizationForm(organization = null) {
     const result = await Swal.fire({
         title: organization ? "Edit Organization" : "Add Organization",
-        html: `<input id="organizationName" class="swal2-input" placeholder="Organization name" value="${escapeHtml(organization?.name || "")}"><input id="organizationSlug" class="swal2-input" placeholder="URL-friendly identifier" value="${escapeHtml(organization?.slug || "")}">`,
+        html: `<input id="organizationName" class="swal2-input" placeholder="Organization name" value="${escapeHtml(organization?.name || "")}"><input id="organizationSlug" class="swal2-input" placeholder="Identifier (optional, generated automatically)" value="${escapeHtml(organization?.slug || "")}"><div class="text-muted small px-4 text-start">Spaces and special characters will be converted automatically.</div>`,
         showCancelButton: true,
         confirmButtonText: organization ? "Save changes" : "Create organization",
         preConfirm: () => {
@@ -48,7 +58,7 @@ async function organizationForm(organization = null) {
         else await createOrganization(result.value);
         await reload();
     } catch (error) {
-        Swal.fire("Unable to save", error.response?.data?.detail || "Check the name, identifier, and your permissions.", "error");
+        Swal.fire("Unable to save", apiErrorMessage(error), "error");
     }
 }
 
