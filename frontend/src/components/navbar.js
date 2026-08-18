@@ -14,9 +14,13 @@ export function navbar() {
 
                 <!-- BRAND -->
                 <a
-                    class="navbar-brand fw-bold"
+                    class="navbar-brand smartentry-brand"
                     href="/src/pages/dashboard.html">
-                    SmartEntry
+                    <img
+                        src="/smartentry-mark.png"
+                        alt=""
+                        class="smartentry-brand-mark">
+                    <span>Smart<span>Entry</span></span>
                 </a>
 
                 <!-- RIGHT SIDE -->

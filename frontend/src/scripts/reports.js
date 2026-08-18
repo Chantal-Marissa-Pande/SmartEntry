@@ -1,5 +1,6 @@
 import { loadLayout } from "../components/layout.js";
 import { getReportData } from "../services/reportService.js";
+import { downloadReportPdf } from "../utils/reportPdf.js";
 
 // =========================================
 // DEFAULT REPORT DATA
@@ -19,6 +20,13 @@ let reportData = {
         highPriority: 0
     }
 };
+
+let selectedRange = {
+    from: "",
+    to: ""
+};
+
+let reportGenerated = false;
 
 // =========================================
 // RENDER PAGE
@@ -41,7 +49,8 @@ function renderPage() {
                         <input
                             type="date"
                             id="dateFrom"
-                            class="form-control">
+                            class="form-control"
+                            value="${selectedRange.from}">
                     </div>
 
                     <div class="col-md-4">
@@ -54,7 +63,8 @@ function renderPage() {
                         <input
                             type="date"
                             id="dateTo"
-                            class="form-control">
+                            class="form-control"
+                            value="${selectedRange.to}">
                     </div>
 
                     <div class="col-md-4">
@@ -72,6 +82,15 @@ function renderPage() {
 
             </div>
         </div>
+
+        ${reportGenerated ? `
+            <div class="d-flex justify-content-end mb-4">
+                <button id="downloadReportBtn" class="btn btn-outline-danger">
+                    <i class="bi bi-file-earmark-pdf me-2"></i>
+                    Download PDF Summary
+                </button>
+            </div>
+        ` : ""}
 
 
         <!-- Visitor Statistics -->
@@ -412,6 +431,13 @@ document.addEventListener("click", async (event) => {
                 dateTo
             );
 
+        selectedRange = {
+            from: dateFrom,
+            to: dateTo
+        };
+
+        reportGenerated = true;
+
         // =========================================
         // RE-RENDER PAGE
         // =========================================
@@ -457,6 +483,20 @@ document.addEventListener("click", async (event) => {
         button.disabled = false;
         button.innerHTML = originalText;
     }
+});
+
+// =========================================
+// DOWNLOAD PDF SUMMARY
+// =========================================
+document.addEventListener("click", (event) => {
+    const button = event.target.closest("#downloadReportBtn");
+    if (!button || !reportGenerated) return;
+
+    downloadReportPdf(
+        reportData,
+        selectedRange.from,
+        selectedRange.to
+    );
 });
 
 // =========================================
