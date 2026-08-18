@@ -1,6 +1,7 @@
 [
   {
     "model": "visitors.visitor",
+    "pk": 10001,
     "fields": {
       "name": "Amina Hassan",
       "company": "Nexus Consulting",
@@ -18,6 +19,7 @@
   },
   {
     "model": "visitors.visitor",
+    "pk": 10002,
     "fields": {
       "name": "Brian Otieno",
       "company": "Cloudline Systems",
@@ -35,6 +37,7 @@
   },
   {
     "model": "visitors.visitor",
+    "pk": 10003,
     "fields": {
       "name": "Carol Njeri",
       "company": "Independent",
@@ -52,6 +55,7 @@
   },
   {
     "model": "visitors.visitor",
+    "pk": 10004,
     "fields": {
       "name": "David Kiptoo",
       "company": "Prime Office Supplies",
@@ -69,6 +73,7 @@
   },
   {
     "model": "visitors.visitor",
+    "pk": 10005,
     "fields": {
       "name": "Esther Achieng",
       "company": "BrightPath Media",
@@ -82,6 +87,106 @@
       "location": "Sales & Marketing",
       "created_at": "2026-08-14T12:10:00Z",
       "updated_at": "2026-08-16T16:20:00Z"
+    }
+  },
+  {
+    "model": "visitors.visitor",
+    "pk": 10006,
+    "fields": {
+      "name": "Felix Mutua", "company": "Swift Courier Services", "phone": "+254 721 345 606", "national_id": "SEED-1006",
+      "purpose": "Document delivery", "host": "Lucy Wambui", "expected_time": "2026-08-18T08:15:00Z",
+      "visitor_type": "Delivery", "status": "Checked Out", "location": "Administration",
+      "created_at": "2026-08-18T07:55:00Z", "updated_at": "2026-08-18T08:35:00Z"
+    }
+  },
+  {
+    "model": "visitors.visitor",
+    "pk": 10007,
+    "fields": {
+      "name": "Grace Wairimu", "company": "AuditPro Kenya", "phone": "+254 734 345 607", "national_id": "SEED-1007",
+      "purpose": "Quarterly audit review", "host": "Samuel Njuguna", "expected_time": "2026-08-15T09:30:00Z",
+      "visitor_type": "Contractor", "status": "Checked Out", "location": "Finance",
+      "created_at": "2026-08-14T08:10:00Z", "updated_at": "2026-08-15T12:45:00Z"
+    }
+  },
+  {
+    "model": "visitors.visitor",
+    "pk": 10008,
+    "fields": {
+      "name": "Henry Maina", "company": "SecureTech Africa", "phone": "+254 710 345 608", "national_id": "SEED-1008",
+      "purpose": "Access control inspection", "host": "Irene Chebet", "expected_time": "2026-08-14T13:00:00Z",
+      "visitor_type": "Vendor", "status": "Checked Out", "location": "Security",
+      "created_at": "2026-08-13T11:25:00Z", "updated_at": "2026-08-14T15:10:00Z"
+    }
+  },
+  {
+    "model": "visitors.visitor",
+    "pk": 10009,
+    "fields": {
+      "name": "Ivy Mumbi", "company": "Independent", "phone": "+254 723 345 609", "national_id": "SEED-1009",
+      "purpose": "Graduate trainee interview", "host": "Peter Kamau", "expected_time": "2026-08-19T10:00:00Z",
+      "visitor_type": "Interview", "status": "Expected", "location": "Human Resources",
+      "created_at": "2026-08-17T14:40:00Z", "updated_at": "2026-08-17T14:40:00Z"
+    }
+  },
+  {
+    "model": "visitors.visitor",
+    "pk": 10010,
+    "fields": {
+      "name": "John Kibet", "company": "BuildRight Ltd", "phone": "+254 735 345 610", "national_id": "SEED-1010",
+      "purpose": "Facilities assessment", "host": "Daniel Mwangi", "expected_time": "2026-08-13T11:30:00Z",
+      "visitor_type": "Contractor", "status": "Checked Out", "location": "Operations",
+      "created_at": "2026-08-12T09:20:00Z", "updated_at": "2026-08-13T14:05:00Z"
+    }
+  },
+  {
+    "model": "visitors.visitor",
+    "pk": 10011,
+    "fields": {
+      "name": "Karen Atieno", "company": "GreenLeaf Catering", "phone": "+254 701 345 611", "national_id": "SEED-1011",
+      "purpose": "Catering proposal", "host": "Ruth Muthoni", "expected_time": "2026-08-12T14:30:00Z",
+      "visitor_type": "Vendor", "status": "Cancelled", "location": "Procurement",
+      "created_at": "2026-08-11T10:10:00Z", "updated_at": "2026-08-12T08:00:00Z"
+    }
+  },
+  {
+    "model": "visitors.visitor",
+    "pk": 10012,
+    "fields": {
+      "name": "Leonard Ouma", "company": "DataWorks East Africa", "phone": "+254 714 345 612", "national_id": "SEED-1012",
+      "purpose": "Database migration workshop", "host": "Mercy Wanjiku", "expected_time": "2026-08-11T09:00:00Z",
+      "visitor_type": "Contractor", "status": "Checked Out", "location": "Information Technology",
+      "created_at": "2026-08-09T16:30:00Z", "updated_at": "2026-08-11T16:15:00Z"
+    }
+  },
+  {
+    "model": "visitors.visitor",
+    "pk": 10013,
+    "fields": {
+      "name": "Mary Nyambura", "company": "MarketPulse Agency", "phone": "+254 725 345 613", "national_id": "SEED-1013",
+      "purpose": "Brand strategy session", "host": "James Kariuki", "expected_time": "2026-08-10T15:30:00Z",
+      "visitor_type": "Guest", "status": "Checked Out", "location": "Sales & Marketing",
+      "created_at": "2026-08-08T12:50:00Z", "updated_at": "2026-08-10T17:00:00Z"
+    }
+  },
+  {
+    "model": "visitors.visitor",
+    "pk": 10014,
+    "fields": {
+      "name": "Noah Wafula", "company": "County Licensing Office", "phone": "+254 736 345 614", "national_id": "SEED-1014",
+      "purpose": "Compliance documentation", "host": "Lucy Wambui", "expected_time": "2026-08-08T08:45:00Z",
+      "visitor_type": "Guest", "status": "Checked Out", "location": "Administration",
+      "created_at": "2026-08-07T14:15:00Z", "updated_at": "2026-08-08T10:20:00Z"
+    }
+  },
+  {
+    "model": "visitors.visitor",
+    "pk": 10015,
+    "fields": {
+      "name": "Olivia Jepchirchir", "company": "TalentBridge", "phone": "+254 709 345 615", "national_id": "SEED-1015",
+      "purpose": "Recruitment partnership meeting", "host": "Peter Kamau", "expected_time": "2026-08-20T13:30:00Z",
+      "visitor_type": "Guest", "status": "Expected", "location": "Human Resources",
+      "created_at": "2026-08-18T09:05:00Z", "updated_at": "2026-08-18T09:05:00Z"
     }
   }
 ]
