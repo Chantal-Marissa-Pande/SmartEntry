@@ -9,31 +9,27 @@ export function navbar() {
         "User";
 
     return `
-        <nav class="navbar navbar-expand-lg bg-white shadow-sm px-4">
+        <nav class="navbar navbar-expand-lg console-navbar px-4">
             <div class="container-fluid">
 
                 <!-- BRAND -->
-                <a
-                    class="navbar-brand smartentry-brand"
-                    href="/src/pages/dashboard.html">
-                    <img
-                        src="/smartentry-mark.png"
-                        alt=""
-                        class="smartentry-brand-mark">
-                    <span>Smart<span>Entry</span></span>
-                </a>
+                <div class="console-context"><span class="live-dot"></span>LIVE OPERATIONS</div>
 
                 <!-- RIGHT SIDE -->
                 <div class="d-flex align-items-center gap-3">
+                    <button type="button" class="theme-toggle" id="themeToggle" title="Toggle theme" aria-label="Toggle theme">
+                        <i class="bi bi-sun"></i>
+                    </button>
 
                     <!-- NOTIFICATIONS -->
                     <div class="dropdown">
                         <button
                             type="button"
-                            class="btn btn-link text-dark p-0 position-relative"
+                            class="btn btn-link console-icon-button p-0 position-relative"
                             id="notificationBtn"
                             title="Notifications"
                             data-bs-toggle="dropdown"
+                            data-bs-auto-close="outside"
                             aria-expanded="false">
                             <i class="bi bi-bell fs-4"></i>
                             <span
@@ -153,6 +149,14 @@ function getLoggedInUser() {
 // LOGOUT
 // =========================================
 document.addEventListener("click", (event) => {
+    const themeButton = event.target.closest("#themeToggle");
+    if (themeButton) {
+        const next = document.documentElement.dataset.theme === "light" ? "dark" : "light";
+        document.documentElement.dataset.theme = next;
+        localStorage.setItem("smartentryTheme", next);
+        themeButton.innerHTML = `<i class="bi bi-${next === "light" ? "moon" : "sun"}"></i>`;
+        return;
+    }
     const logoutButton =
         event.target.closest("#logoutBtn");
     if (!logoutButton) {
@@ -166,3 +170,6 @@ document.addEventListener("click", (event) => {
     window.location.href =
         "/";
 });
+
+const savedTheme = localStorage.getItem("smartentryTheme") || "dark";
+document.documentElement.dataset.theme = savedTheme;

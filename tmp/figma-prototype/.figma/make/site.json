@@ -1,0 +1,10 @@
+{
+  "description": "Creates interactive prototypes and wireframes to visualize app designs, helping designers and clients preview and refine user interfaces efficiently.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}

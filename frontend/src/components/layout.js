@@ -11,27 +11,26 @@ export function loadLayout(title, content) {
         "User";
 
     document.getElementById("app").innerHTML = `
-        <div id="navbar"></div>
-        <div class="container-fluid">
-            <div class="row g-0">
-                <div class="col-auto px-0">
-                    <div id="sidebar"></div>
+        <div class="app-shell">
+            <aside class="app-sidebar">
+                <div class="sidebar-brand">
+                    <img src="/smartentry-mark.png" alt="" class="sidebar-brand-mark">
+                    <div><strong>SmartEntry</strong><span>SECURITY CONSOLE</span></div>
                 </div>
+                <div class="system-status"><span></span>SYSTEM ONLINE</div>
+                <div id="sidebar"></div>
+            </aside>
 
-                <main class="col bg-light min-vh-100 p-4">
-                    <div
-                        class="d-flex justify-content-between align-items-center mb-4">
+            <div class="app-workspace">
+                <div id="navbar"></div>
+                <main class="app-main">
+                    <header class="page-heading">
                         <div>
-                            <h2 class="fw-bold">
-                                ${title}
-                            </h2>
-                            <p class="text-muted mb-0">
-                                Welcome back,
-                                ${displayName}
-                            </p>
+                            <span>SMARTENTRY / ${title.toUpperCase()}</span>
+                            <h1>${title}</h1>
+                            <p>Welcome back, ${displayName}</p>
                         </div>
-                    </div>
-
+                    </header>
                     ${content}
                 </main>
             </div>

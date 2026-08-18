@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import 'tailwindcss';
+
+/* ── Dark theme (default) ───────────────────────────────── */
+:root {
+  --bg:           #080c17;
+  --surface:      #0f1623;
+  --card:         #131b2e;
+  --border:       #1e2d47;
+  --border-mid:   #2a3f5f;
+  --cyan:         #00c8d7;
+  --cyan-dim:     rgba(0,200,215,0.12);
+  --cyan-glow:    rgba(0,200,215,0.06);
+  --green:        #10b981;
+  --green-dim:    rgba(16,185,129,0.12);
+  --amber:        #f59e0b;
+  --amber-dim:    rgba(245,158,11,0.12);
+  --red:          #ef4444;
+  --red-dim:      rgba(239,68,68,0.12);
+  --text:         #e2e8f0;
+  --text-sub:     #94a3b8;
+  --text-muted:   #64748b;
+  --input-bg:     #080c17;
+  --sidebar-bg:   #060a12;
+  --toggle-bg:    #1e2d47;
+  --row-hover:    rgba(255,255,255,0.025);
+  --shadow:       0 4px 24px rgba(0,0,0,0.4);
+}
+
+/* ── Light theme ────────────────────────────────────────── */
+[data-theme="light"] {
+  --bg:           #f1f5f9;
+  --surface:      #ffffff;
+  --card:         #f8fafc;
+  --border:       #e2e8f0;
+  --border-mid:   #cbd5e1;
+  --cyan:         #0891b2;
+  --cyan-dim:     rgba(8,145,178,0.1);
+  --cyan-glow:    rgba(8,145,178,0.04);
+  --green:        #059669;
+  --green-dim:    rgba(5,150,105,0.1);
+  --amber:        #d97706;
+  --amber-dim:    rgba(217,119,6,0.1);
+  --red:          #dc2626;
+  --red-dim:      rgba(220,38,38,0.1);
+  --text:         #0f172a;
+  --text-sub:     #475569;
+  --text-muted:   #94a3b8;
+  --input-bg:     #f8fafc;
+  --sidebar-bg:   #0f172a;
+  --toggle-bg:    #e2e8f0;
+  --row-hover:    rgba(0,0,0,0.025);
+  --shadow:       0 4px 24px rgba(0,0,0,0.08);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  transition: background 0.2s, color 0.2s;
+}
+
+input, select, textarea, button {
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+@keyframes fadein {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fadein { animation: fadein 0.2s ease; }
+
+@keyframes pulse-ring {
+  0%   { transform: scale(1); opacity: 0.5; }
+  100% { transform: scale(2); opacity: 0; }
+}

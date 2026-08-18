@@ -61,15 +61,18 @@ function renderNotifications() {
     }
 
     return notifications.map((item) => `
-        <button class="notification-item ${item.is_read ? "" : "unread"}" data-notification-id="${item.id}" data-related-type="${escapeHtml(item.related_type || "")}" data-related-id="${item.related_id || ""}">
+        <article class="notification-item ${item.is_read ? "" : "unread"}" data-notification-id="${item.id}" data-related-type="${escapeHtml(item.related_type || "")}" data-related-id="${item.related_id || ""}" role="button" tabindex="0">
             <span class="notification-icon type-${escapeHtml(item.notification_type)}"><i class="bi ${notificationIcon(item)}"></i></span>
             <span class="notification-copy">
                 <span class="notification-title">${escapeHtml(item.title)}</span>
                 <span class="notification-message">${escapeHtml(item.message)}</span>
-                <span class="notification-time">${relativeTime(item.created_at)}</span>
+                <span class="notification-meta">
+                    <span class="notification-time">${relativeTime(item.created_at)}</span>
+                    ${item.is_read ? '<span class="read-state"><i class="bi bi-check2"></i> Read</span>' : `<button type="button" class="mark-read-btn" data-mark-read="${item.id}"><i class="bi bi-check2-circle"></i> Mark as read</button>`}
+                </span>
             </span>
             ${item.is_read ? "" : '<span class="unread-dot"></span>'}
-        </button>`).join("");
+        </article>`).join("");
 }
 
 function renderIntelligence() {
@@ -107,7 +110,9 @@ function render() {
     menu.innerHTML = `
         <div class="notification-header">
             <div><strong>Activity center</strong><span>Live updates from SmartEntry</span></div>
-            ${unread ? '<button class="btn btn-sm btn-link" id="markAllReadBtn">Mark all read</button>' : ""}
+            ${notifications.length
+                ? `<button class="btn btn-sm mark-all-read" id="markAllReadBtn"><i class="bi bi-check2-all"></i> ${unread ? "Mark all as read" : "All read"}</button>`
+                : ""}
         </div>
         <div class="notification-tabs" role="tablist">
             <button class="${activeTab === "notifications" ? "active" : ""}" data-alert-tab="notifications">Notifications ${unread ? `<span>${unread}</span>` : ""}</button>
@@ -147,6 +152,7 @@ function bindEvents() {
     document.addEventListener("click", async (event) => {
         const tab = event.target.closest("[data-alert-tab]");
         if (tab) {
+            event.preventDefault();
             event.stopPropagation();
             activeTab = tab.dataset.alertTab;
             render();
@@ -155,9 +161,23 @@ function bindEvents() {
 
         const markAll = event.target.closest("#markAllReadBtn");
         if (markAll) {
+            event.preventDefault();
             event.stopPropagation();
+            markAll.disabled = true;
             await markAllNotificationsRead();
             notifications = notifications.map((item) => ({ ...item, is_read: true }));
+            render();
+            return;
+        }
+
+        const markRead = event.target.closest("[data-mark-read]");
+        if (markRead) {
+            event.preventDefault();
+            event.stopPropagation();
+            const id = Number(markRead.dataset.markRead);
+            markRead.disabled = true;
+            await markNotificationRead(id);
+            notifications = notifications.map((item) => item.id === id ? { ...item, is_read: true } : item);
             render();
             return;
         }
@@ -180,8 +200,10 @@ function bindEvents() {
 
         const dismiss = event.target.closest("[data-dismiss-alert]");
         if (dismiss) {
+            event.preventDefault();
             event.stopPropagation();
             const id = Number(dismiss.dataset.dismissAlert);
+            dismiss.disabled = true;
             await dismissIntelligenceAlert(id);
             intelligenceAlerts = intelligenceAlerts.filter((alert) => alert.id !== id);
             render();
