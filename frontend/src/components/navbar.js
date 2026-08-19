@@ -66,7 +66,7 @@ export function navbar() {
                             <li>
                                 <a
                                     class="dropdown-item"
-                                    href="/src/pages/profile.html">
+                                    href="/src/pages/settings.html">
                                     <i class="bi bi-person me-2"></i>
                                     Profile
                                 </a>

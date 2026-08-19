@@ -193,12 +193,12 @@ export function visitorModal(visitor = null) {
                                         Expected Date
                                     </label>
 
-                                    <div class="picker-input-group"><input
+                                    <input
                                         type="date"
                                         id="expectedDate"
                                         class="form-control"
                                         value="${expectedDate}"
-                                        required><button type="button" class="picker-button" data-picker-target="expectedDate" aria-label="Open expected date calendar"><i class="bi bi-calendar3" aria-hidden="true"></i></button></div>
+                                        required>
                                 </div>
 
                                 <!-- EXPECTED TIME -->
@@ -209,13 +209,13 @@ export function visitorModal(visitor = null) {
                                         Expected Time
                                     </label>
 
-                                    <div class="picker-input-group"><input
+                                    <input
                                         type="time"
                                         id="expectedTime"
                                         class="form-control"
                                         value="${expectedTime}"
                                         step="60"
-                                        required><button type="button" class="picker-button" data-picker-target="expectedTime" aria-label="Open expected time selector"><i class="bi bi-clock" aria-hidden="true"></i></button></div>
+                                        required>
 
                                     <div class="form-text">
                                         Select a time using the scroll/clock controls.
