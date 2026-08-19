@@ -1,6 +1,7 @@
 import { navbar } from "./navbar.js";
 import { sidebar } from "./sidebar.js";
 import { initializeNotificationCenter } from "./notificationCenter.js";
+import { initializePickerInputs } from "./pickerInputs.js";
 
 export function loadLayout(title, content) {
     const user =
@@ -47,6 +48,7 @@ export function loadLayout(title, content) {
         sidebar();
 
     initializeNotificationCenter();
+    initializePickerInputs();
 }
 
 // =========================================

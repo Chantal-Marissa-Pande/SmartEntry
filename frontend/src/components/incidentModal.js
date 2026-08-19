@@ -181,12 +181,12 @@ export function incidentModal(incident = null) {
 
                                     </label>
 
-                                    <input
+                                    <div class="picker-input-group"><input
                                         type="date"
                                         id="incidentDate"
                                         class="form-control"
                                         value="${incident?.date || ""}"
-                                        required>
+                                        required><button type="button" class="picker-button" data-picker-target="incidentDate" aria-label="Open incident date calendar"><i class="bi bi-calendar3" aria-hidden="true"></i></button></div>
 
                                 </div>
 
@@ -202,13 +202,13 @@ export function incidentModal(incident = null) {
 
                                     </label>
 
-                                    <input
+                                    <div class="picker-input-group"><input
                                         type="time"
                                         id="incidentTime"
                                         class="form-control"
                                         value="${incident?.time || ""}"
                                         step="60"
-                                        required>
+                                        required><button type="button" class="picker-button" data-picker-target="incidentTime" aria-label="Open incident time selector"><i class="bi bi-clock" aria-hidden="true"></i></button></div>
 
                                 </div>
 

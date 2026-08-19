@@ -193,12 +193,12 @@ export function visitorModal(visitor = null) {
                                         Expected Date
                                     </label>
 
-                                    <input
+                                    <div class="picker-input-group"><input
                                         type="date"
                                         id="expectedDate"
                                         class="form-control"
                                         value="${expectedDate}"
-                                        required>
+                                        required><button type="button" class="picker-button" data-picker-target="expectedDate" aria-label="Open expected date calendar"><i class="bi bi-calendar3" aria-hidden="true"></i></button></div>
                                 </div>
 
                                 <!-- EXPECTED TIME -->
@@ -209,16 +209,16 @@ export function visitorModal(visitor = null) {
                                         Expected Time
                                     </label>
 
-                                    <input
+                                    <div class="picker-input-group"><input
                                         type="time"
                                         id="expectedTime"
                                         class="form-control"
                                         value="${expectedTime}"
                                         step="60"
-                                        required>
+                                        required><button type="button" class="picker-button" data-picker-target="expectedTime" aria-label="Open expected time selector"><i class="bi bi-clock" aria-hidden="true"></i></button></div>
 
                                     <div class="form-text">
-                                        Type the time or use the clock controls.
+                                        Select a time using the scroll/clock controls.
                                     </div>
                                 </div>
 
