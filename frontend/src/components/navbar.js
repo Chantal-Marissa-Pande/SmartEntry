@@ -3,8 +3,8 @@
 // =========================================
 export function navbar() {
     const user = getLoggedInUser();
-    const displayName =
-        user?.name ||
+    const userName =
+        user?.fullName ||
         user?.email ||
         "User";
 
@@ -57,7 +57,7 @@ export function navbar() {
                             data-bs-toggle="dropdown"
                             aria-expanded="false">
                             <i class="bi bi-person-circle me-1"></i>
-                            ${displayName}
+                            ${userName}
                         </button>
 
                         <ul class="dropdown-menu dropdown-menu-end">
@@ -68,7 +68,7 @@ export function navbar() {
                                     class="dropdown-item"
                                     href="/src/pages/settings.html">
                                     <i class="bi bi-person me-2"></i>
-                                    Profile
+                                    ${userName}
                                 </a>
                             </li>
 
@@ -131,7 +131,7 @@ function getLoggedInUser() {
             first_name: payload.first_name,
             last_name: payload.last_name,
             role: payload.role,
-            name:
+            fullName:
                 `${payload.first_name || ""} ${payload.last_name || ""}`
                     .trim()
         };

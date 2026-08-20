@@ -7,8 +7,13 @@ export function loadLayout(title, content) {
     const user =
         getLoggedInUser();
 
-    const displayName =
-        user?.first_name ||
+    const organizationName =
+        user?.organization_name ||
+        "SmartEntry";
+
+    const userName =
+        `${user?.first_name || ""} ${user?.last_name || ""}`.trim() ||
+        user?.email ||
         "User";
 
     document.getElementById("app").innerHTML = `
@@ -27,9 +32,9 @@ export function loadLayout(title, content) {
                 <main class="app-main">
                     <header class="page-heading">
                         <div>
-                            <span>SMARTENTRY / ${title.toUpperCase()}</span>
+                            <span>${organizationName.toUpperCase()} / ${title.toUpperCase()}</span>
                             <h1>${title}</h1>
-                            <p>Welcome back, ${displayName}</p>
+                            <p>Welcome back, ${userName} — ${organizationName}</p>
                         </div>
                     </header>
                     ${content}
@@ -77,7 +82,9 @@ function getLoggedInUser() {
             email: payload.email,
             first_name: payload.first_name,
             last_name: payload.last_name,
-            role: payload.role
+            role: payload.role,
+            organization_id: payload.organization_id,
+            organization_name: payload.organization_name
         };
 
     } catch (error) {
