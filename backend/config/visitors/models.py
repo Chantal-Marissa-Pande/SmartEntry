@@ -38,6 +38,12 @@ class Visitor(models.Model):
         null=True
     )
 
+    has_laptop = models.BooleanField(default=False)
+
+    laptop_make_model = models.CharField(max_length=150, blank=True)
+
+    laptop_serial_number = models.CharField(max_length=100, blank=True)
+
     purpose = models.CharField(
         max_length=255
     )

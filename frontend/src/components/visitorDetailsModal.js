@@ -82,6 +82,24 @@ export function visitorDetailsModal(visitor) {
                             </div>
 
                             <div class="col-md-6">
+                                <label class="text-muted small">Laptop</label>
+                                <p class="fw-semibold">
+                                    ${visitor.hasLaptop ? "Yes" : "No"}
+                                </p>
+                            </div>
+
+                            ${visitor.hasLaptop ? `
+                                <div class="col-md-6">
+                                    <label class="text-muted small">Laptop Make / Model</label>
+                                    <p class="fw-semibold">${visitor.laptopMakeModel || "-"}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="text-muted small">Laptop Serial Number</label>
+                                    <p class="fw-semibold">${visitor.laptopSerialNumber || "-"}</p>
+                                </div>
+                            ` : ""}
+
+                            <div class="col-md-6">
                                 <label class="text-muted small">
                                     Department
                                 </label>

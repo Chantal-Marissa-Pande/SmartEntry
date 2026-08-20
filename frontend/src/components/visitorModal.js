@@ -125,6 +125,43 @@ export function visitorModal(visitor = null) {
                                 </div>
 
                                 <!-- PURPOSE -->
+                                <div class="col-12">
+                                    <div class="form-check">
+                                        <input
+                                            type="checkbox"
+                                            id="visitorHasLaptop"
+                                            class="form-check-input"
+                                            ${visitor?.hasLaptop ? "checked" : ""}>
+                                        <label for="visitorHasLaptop" class="form-check-label">
+                                            Visitor is bringing a laptop (optional)
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="laptopMakeModel" class="form-label">
+                                        Laptop Make / Model
+                                    </label>
+                                    <input
+                                        type="text"
+                                        id="laptopMakeModel"
+                                        class="form-control"
+                                        value="${visitor?.laptopMakeModel || ""}"
+                                        placeholder="e.g. Dell Latitude 5440">
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="laptopSerialNumber" class="form-label">
+                                        Laptop Serial Number
+                                    </label>
+                                    <input
+                                        type="text"
+                                        id="laptopSerialNumber"
+                                        class="form-control"
+                                        value="${visitor?.laptopSerialNumber || ""}">
+                                </div>
+
+                                <!-- PURPOSE -->
                                 <div class="col-md-6">
                                     <label
                                         for="visitorPurpose"

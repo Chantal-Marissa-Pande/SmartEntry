@@ -23,6 +23,9 @@ class UserManager(BaseUserManager):
 
         email = self.normalize_email(email)
 
+        if extra_fields.get("role") == User.Role.ADMIN:
+            extra_fields.setdefault("is_staff", True)
+
         user = self.model(
             email=email,
             **extra_fields
@@ -105,6 +108,11 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name} ({self.email})"
+
+    def save(self, *args, **kwargs):
+        if self.role == self.Role.ADMIN:
+            self.is_staff = True
+        super().save(*args, **kwargs)
 
 class UserSettings(models.Model):
     user = models.OneToOneField(

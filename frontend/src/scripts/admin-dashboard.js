@@ -5,6 +5,20 @@ import api from "../services/api.js";
 // =========================================
 const ADMIN_DASHBOARD_ENDPOINT = "/auth/admin-dashboard/";
 
+function djangoAdminUrl() {
+    try {
+        const token = localStorage.getItem("accessToken");
+        const payload = JSON.parse(
+            atob(token.split(".")[1].replace(/-/g, "+").replace(/_/g, "/"))
+        );
+        return payload.platform_admin === true
+            ? "http://127.0.0.1:8000/admin/"
+            : "http://127.0.0.1:8000/admin/organization-dashboard/";
+    } catch {
+        return "http://127.0.0.1:8000/admin/organization-dashboard/";
+    }
+}
+
 // =========================================
 // FORMAT DATE
 // =========================================
@@ -477,7 +491,7 @@ function adminTasks() {
                         </p>
 
                         <a
-                            href="http://127.0.0.1:8000/admin/"
+                            href="${djangoAdminUrl()}"
                             target="_blank"
                             rel="noopener noreferrer"
                             class="btn btn-outline-dark">

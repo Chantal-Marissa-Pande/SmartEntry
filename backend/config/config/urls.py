@@ -1,8 +1,15 @@
 from django.contrib import admin
 from django.urls import include, path
+from users.django_admin_views import organization_admin_dashboard
 
 
 urlpatterns = [
+
+    path(
+        "admin/organization-dashboard/",
+        admin.site.admin_view(organization_admin_dashboard),
+        name="organization-admin-dashboard",
+    ),
 
     # Django Admin
     path(

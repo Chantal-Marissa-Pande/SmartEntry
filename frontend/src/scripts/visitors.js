@@ -216,6 +216,10 @@ document.addEventListener("submit", async (event) => {
             .value
             .trim();
 
+    const hasLaptop = document.getElementById("visitorHasLaptop").checked;
+    const laptopMakeModel = document.getElementById("laptopMakeModel").value.trim();
+    const laptopSerialNumber = document.getElementById("laptopSerialNumber").value.trim();
+
     const department =
         document
             .getElementById("visitorDepartment")
@@ -291,6 +295,12 @@ document.addEventListener("submit", async (event) => {
         phone,
 
         nationalId,
+
+        hasLaptop,
+
+        laptopMakeModel,
+
+        laptopSerialNumber,
 
         purpose,
 
