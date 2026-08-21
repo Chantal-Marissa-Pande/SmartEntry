@@ -366,11 +366,19 @@ document.addEventListener("submit", async (event) => {
                 error
             );
 
+            const validationErrors = error.response?.data;
+            const backendMessage = validationErrors
+                ? Object.entries(validationErrors)
+                    .map(([field, messages]) =>
+                        `${field}: ${Array.isArray(messages) ? messages.join(" ") : messages}`
+                    )
+                    .join("\n")
+                : "Unable to update the visitor.";
+
             Swal.fire({
                 icon: "error",
                 title: "Update Failed",
-                text:
-                    "Unable to update the visitor."
+                text: backendMessage
             });
         }
 

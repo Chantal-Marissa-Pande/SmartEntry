@@ -358,23 +358,23 @@ export function visitorModal(visitor = null) {
                                         </option>
 
                                         <option
-                                            value="In Progress"
+                                            value="Checked In"
                                             ${
-                                                selectedStatus === "In Progress"
+                                                selectedStatus === "Checked In"
                                                     ? "selected"
                                                     : ""
                                             }>
-                                            In Progress
+                                            Checked In
                                         </option>
 
                                         <option
-                                            value="Completed"
+                                            value="Checked Out"
                                             ${
-                                                selectedStatus === "Completed"
+                                                selectedStatus === "Checked Out"
                                                     ? "selected"
                                                     : ""
                                             }>
-                                            Completed
+                                            Checked Out
                                         </option>
 
                                         <option
