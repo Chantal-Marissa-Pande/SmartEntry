@@ -1,5 +1,12 @@
 export function incidentModal(incident = null) {
 
+    const escapeHtml = (value) => String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+
     const isEditing =
         incident !== null;
 
@@ -163,7 +170,7 @@ export function incidentModal(incident = null) {
                                         type="text"
                                         id="incidentLocation"
                                         class="form-control"
-                                        value="${incident?.location || ""}"
+                                        value="${escapeHtml(incident?.location)}"
                                         placeholder="e.g. Main Entrance"
                                         required>
 
@@ -328,6 +335,31 @@ export function incidentModal(incident = null) {
                                         </option>
 
                                     </select>
+
+                                </div>
+
+
+                                <!-- DESCRIPTION -->
+                                <div class="col-12">
+
+                                    <label
+                                        for="incidentDescription"
+                                        class="form-label">
+
+                                        Description
+
+                                    </label>
+
+                                    <textarea
+                                        id="incidentDescription"
+                                        class="form-control"
+                                        rows="4"
+                                        placeholder="Describe what happened and include any relevant details"
+                                        required>${escapeHtml(incident?.description)}</textarea>
+
+                                    <div class="form-text">
+                                        This context will be included with related intelligence alerts.
+                                    </div>
 
                                 </div>
 

@@ -1,5 +1,12 @@
 export function incidentDetailsModal(incident) {
 
+    const escapeHtml = (value) => String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+
     const getStatusClass = (status) => {
 
         switch (status) {
@@ -168,6 +175,20 @@ export function incidentDetailsModal(incident) {
                                     ${incident.status || "-"}
 
                                 </span>
+
+                            </div>
+
+
+                            <!-- DESCRIPTION -->
+                            <div class="col-12">
+
+                                <div class="text-muted small">
+                                    Description
+                                </div>
+
+                                <div class="fw-semibold text-break" style="white-space: pre-wrap;">${escapeHtml(
+                                    incident.description || "No description recorded."
+                                )}</div>
 
                             </div>
 

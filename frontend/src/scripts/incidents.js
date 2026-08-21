@@ -281,6 +281,11 @@ document.addEventListener("submit", async (event) => {
             document
                 .getElementById("incidentTime")
                 .value,
+        description:
+            document
+                .getElementById("incidentDescription")
+                .value
+                .trim(),
         priority:
             document
                 .getElementById("incidentPriority")
