@@ -12,6 +12,16 @@ export function navbar() {
         <nav class="navbar navbar-expand-lg console-navbar px-4">
             <div class="container-fluid">
 
+                <button
+                    type="button"
+                    class="mobile-menu-toggle"
+                    id="mobileMenuToggle"
+                    aria-label="Open navigation"
+                    aria-controls="sidebar"
+                    aria-expanded="false">
+                    <i class="bi bi-list"></i>
+                </button>
+
                 <!-- BRAND -->
                 <div class="console-context"><span class="live-dot"></span>LIVE OPERATIONS</div>
 
@@ -149,6 +159,21 @@ function getLoggedInUser() {
 // LOGOUT
 // =========================================
 document.addEventListener("click", (event) => {
+    const menuButton = event.target.closest("#mobileMenuToggle");
+    const closeButton = event.target.closest("[data-sidebar-close]");
+    const sidebarLink = event.target.closest(".app-sidebar a");
+
+    if (menuButton) {
+        const isOpen = document.body.classList.toggle("sidebar-open");
+        menuButton.setAttribute("aria-expanded", String(isOpen));
+        menuButton.setAttribute("aria-label", isOpen ? "Close navigation" : "Open navigation");
+        return;
+    }
+
+    if (closeButton || (sidebarLink && window.matchMedia("(max-width: 800px)").matches)) {
+        closeMobileNavigation();
+    }
+
     const themeButton = event.target.closest("#themeToggle");
     if (themeButton) {
         const next = document.documentElement.dataset.theme === "light" ? "dark" : "light";
@@ -169,6 +194,25 @@ document.addEventListener("click", (event) => {
 
     window.location.href =
         "/";
+});
+
+function closeMobileNavigation() {
+    document.body.classList.remove("sidebar-open");
+    const menuButton = document.getElementById("mobileMenuToggle");
+    menuButton?.setAttribute("aria-expanded", "false");
+    menuButton?.setAttribute("aria-label", "Open navigation");
+}
+
+document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+        closeMobileNavigation();
+    }
+});
+
+window.addEventListener("resize", () => {
+    if (window.innerWidth > 800) {
+        closeMobileNavigation();
+    }
 });
 
 const savedTheme = localStorage.getItem("smartentryTheme") || "dark";

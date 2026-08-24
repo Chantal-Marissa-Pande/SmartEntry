@@ -147,3 +147,72 @@
 .activity-chart{height:210px;display:flex;align-items:flex-end;gap:6px;border-bottom:1px solid #dfe5ed;padding:20px 8px 0}.hour-column{height:100%;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;min-width:5px}.hour-bar{width:100%;max-width:24px;background:#c8d8f2;border-radius:5px 5px 0 0;transition:height .3s}.hour-bar.peak{background:#2563eb}.hour-value{font-size:.62rem;color:#758399;height:15px}.hour-column small{height:16px;font-size:.55rem;color:#98a2b3}.activity-axis{display:flex;justify-content:space-between;color:#98a2b3;font-size:.7rem;padding:7px 8px 0}.chart-key{font-size:.7rem;color:#7c8798!important;text-transform:none!important;letter-spacing:0!important}.chart-key span{display:inline-block;width:8px;height:8px;background:#2563eb;border-radius:2px;margin-right:5px}.chart-empty,.analytics-loading,.analytics-error{min-height:210px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#98a2b3;gap:8px}.chart-empty i,.analytics-error i{font-size:2rem}.analytics-loading{min-height:360px}.analytics-error{background:#fff;border-radius:16px;border:1px solid #e8edf4;padding:30px}.analytics-error h4{color:#344054;margin:5px 0 0}.analytics-error p{margin-bottom:8px}
 @media(max-width:900px){.analytics-toolbar{align-items:flex-start;flex-direction:column}.date-controls{width:100%;flex-wrap:wrap}.date-controls label{flex:1}.date-controls input{width:100%}.donut-wrap{flex-wrap:wrap}}
 @media(max-width:600px){.analytics-toolbar{padding:18px}.date-controls{display:grid;grid-template-columns:1fr 1fr}.date-controls .btn{grid-column:1/-1}.analytics-card{padding:18px}.bar-row{grid-template-columns:90px 1fr 24px}.activity-chart{gap:3px;height:170px}.hour-value{display:none}}
+
+/* Responsive application shell and component safeguards. Keep these final so
+   legacy component rules cannot override the mobile behavior. */
+.mobile-menu-toggle,.sidebar-backdrop{display:none}
+
+@media(max-width:800px){
+    body.sidebar-open{overflow:hidden}
+    .app-sidebar{width:min(286px,84vw);transform:translateX(-100%);transition:transform .22s ease;box-shadow:18px 0 50px rgba(0,0,0,.35)}
+    body.sidebar-open .app-sidebar{transform:translateX(0)}
+    .app-workspace{margin-left:0}
+    .sidebar-brand{padding:18px 19px}
+    .sidebar-brand div,.system-status{display:flex}
+    .sidebar-section{padding:10px}
+    .sidebar-section.mt-4:before{display:block}
+    .menu-item{font-size:13px;text-align:left;padding:13px 14px;min-height:46px;display:flex;align-items:center}
+    .menu-item i{font-size:17px;margin-right:.65rem!important}
+    .sidebar-backdrop{position:fixed;inset:0;z-index:1025;border:0;background:rgba(2,6,15,.68);backdrop-filter:blur(2px)}
+    body.sidebar-open .sidebar-backdrop{display:block}
+    .mobile-menu-toggle{display:grid;place-items:center;width:40px;height:40px;min-width:40px;border:1px solid var(--border);border-radius:8px;background:var(--card);color:var(--text);font-size:22px}
+    .console-navbar{height:auto;min-height:61px;padding:10px 16px!important}
+    .console-navbar .container-fluid{display:flex;flex-wrap:nowrap;gap:12px}
+    .console-navbar .container-fluid>.d-flex{margin-left:auto}
+    .console-context{display:none}
+    .app-main{padding:22px 16px 32px}
+    #notificationMenu{left:12px!important;right:12px!important;top:68px!important}
+    .table-responsive{border-radius:inherit;-webkit-overflow-scrolling:touch}
+    .table-responsive>.table{min-width:680px}
+    .card-header.d-flex{flex-wrap:wrap;gap:10px}
+    .modal-dialog{margin:12px;max-width:calc(100vw - 24px)}
+    .modal-body{max-height:calc(100vh - 150px);overflow-y:auto}
+}
+
+@media(max-width:600px){
+    .app-main{padding:18px 12px 28px}
+    .page-heading{margin-bottom:18px}
+    .page-heading h1{font-size:22px;overflow-wrap:anywhere}
+    .page-heading p{line-height:1.5}
+    .console-navbar .gap-3{gap:8px!important}
+    .console-navbar .btn-outline-primary{width:40px;height:40px;padding:0;font-size:0;border-radius:8px}
+    .console-navbar .btn-outline-primary i{font-size:16px;margin:0!important}
+    .theme-toggle,.console-icon-button{width:40px;height:40px;min-width:40px}
+    .app-main .card-header,.app-main .card-body{padding:14px}
+    .app-main .btn{min-height:42px}
+    .app-main .d-flex.justify-content-end{flex-wrap:wrap;gap:8px}
+    .app-main .d-flex.justify-content-end>.btn{flex:1 1 auto}
+    .modal-dialog{margin:0;max-width:100vw;min-height:100%;display:flex;align-items:flex-end}
+    .modal-content{max-height:96vh;border-radius:14px 14px 0 0}
+    .modal-body{max-height:none;overflow-y:auto}
+    .modal-footer{flex-wrap:wrap}
+    .modal-footer .btn{flex:1 1 120px;min-height:44px}
+    .intelligence-hero,.organization-summary,.analytics-toolbar{padding:18px}
+    .intel-detail-row{flex-direction:column;gap:3px}
+    .intel-detail-row strong{text-align:left}
+    .organization-card header{grid-template-columns:45px minmax(0,1fr)}
+    .organization-card header>.badge{grid-column:1/-1;justify-self:start}
+    .organization-card footer{flex-wrap:wrap;gap:8px}
+    .login-page{overflow:auto}
+    .login-page .container{padding:72px 14px 24px}
+    .login-card{width:100%;max-width:420px;padding:20px!important}
+}
+
+@media(max-width:380px){
+    .console-navbar{padding-inline:10px!important}
+    .console-navbar .container-fluid{gap:6px}
+    .mobile-menu-toggle,.theme-toggle,.console-icon-button,.console-navbar .btn-outline-primary{width:38px;height:38px;min-width:38px}
+    .date-controls{grid-template-columns:1fr}
+    .date-controls .btn{grid-column:auto}
+    .bar-row{grid-template-columns:72px 1fr 22px;gap:7px}
+}

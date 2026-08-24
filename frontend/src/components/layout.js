@@ -26,6 +26,7 @@ export function loadLayout(title, content) {
                 <div class="system-status"><span></span>SYSTEM ONLINE</div>
                 <div id="sidebar"></div>
             </aside>
+            <button class="sidebar-backdrop" type="button" aria-label="Close navigation" data-sidebar-close></button>
 
             <div class="app-workspace">
                 <div id="navbar"></div>
