@@ -3,9 +3,10 @@ from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
-from .views import DashboardView
+from .views import DashboardView, HealthView
 
 urlpatterns = [
+    path("health/", HealthView.as_view(), name="health"),
     #JWT authentication
     path(
         "login/",

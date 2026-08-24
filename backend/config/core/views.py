@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.utils import timezone
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from incidents.models import Incident
@@ -9,6 +9,14 @@ from users.tenancy import organization_queryset
 
 
 User = get_user_model()
+
+
+class HealthView(APIView):
+    permission_classes = [AllowAny]
+    authentication_classes = []
+
+    def get(self, request):
+        return Response({"status": "ok"})
 
 
 class DashboardView(APIView):

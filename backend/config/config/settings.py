@@ -7,6 +7,8 @@ import os
 from pathlib import Path
 from datetime import timedelta
 
+import dj_database_url
+
 # ============================================================
 # BASE
 # ============================================================
@@ -33,10 +35,17 @@ PLATFORM_ADMIN_EMAIL = "admin@smartentry.com"
 
 DEBUG = os.getenv("DJANGO_DEBUG", "false").lower() == "true"
 
-ALLOWED_HOSTS = [
-    "localhost",
-    "127.0.0.1",
-]
+def env_list(name, default=""):
+    """Read a comma-separated environment variable, ignoring empty entries."""
+    return [item.strip() for item in os.getenv(name, default).split(",") if item.strip()]
+
+
+ALLOWED_HOSTS = env_list("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1")
+
+# Render injects this automatically. Including it here avoids having to copy the
+# generated hostname into another setting.
+if render_hostname := os.getenv("RENDER_EXTERNAL_HOSTNAME"):
+    ALLOWED_HOSTS.append(render_hostname)
 
 
 # ============================================================
@@ -76,6 +85,7 @@ MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
 
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -123,15 +133,18 @@ WSGI_APPLICATION = "config.wsgi.application"
 # DATABASE
 # ============================================================
 
+local_database_url = (
+    f"postgresql://smartentry_user:{os.getenv('DB_PASSWORD', '')}"
+    "@localhost:5432/smartentry"
+)
+
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "smartentry",
-        "USER": "smartentry_user",
-        "PASSWORD": os.environ["DB_PASSWORD"],
-        "HOST": "localhost",
-        "PORT": "5432",
-    }
+    "default": dj_database_url.config(
+        default=local_database_url,
+        conn_max_age=int(os.getenv("DB_CONN_MAX_AGE", "60")),
+        conn_health_checks=True,
+        ssl_require=os.getenv("DB_SSL_REQUIRED", "false").lower() == "true",
+    )
 }
 
 
@@ -180,6 +193,15 @@ USE_TZ = True
 # ============================================================
 
 STATIC_URL = "static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 
 
 # ============================================================
@@ -193,20 +215,24 @@ EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 # CORS
 # ============================================================
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
-]
+CORS_ALLOWED_ORIGINS = env_list(
+    "CORS_ALLOWED_ORIGINS",
+    "http://localhost:5173,http://127.0.0.1:5173",
+)
 
 
 # ============================================================
 # CSRF
 # ============================================================
 
-CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
-]
+CSRF_TRUSTED_ORIGINS = env_list(
+    "CSRF_TRUSTED_ORIGINS",
+    "http://localhost:5173,http://127.0.0.1:5173",
+)
+
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+SESSION_COOKIE_SECURE = not DEBUG
+CSRF_COOKIE_SECURE = not DEBUG
 
 
 # ============================================================
