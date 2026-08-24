@@ -7,15 +7,20 @@ import os
 from pathlib import Path
 from datetime import timedelta
 
-from dotenv import load_dotenv
-
-
 # ============================================================
 # BASE
 # ============================================================
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-load_dotenv(BASE_DIR / ".env")
+
+# Load simple KEY=VALUE entries without requiring an external dotenv package.
+env_file = BASE_DIR / ".env"
+if env_file.exists():
+    for line in env_file.read_text().splitlines():
+        line = line.strip()
+        if line and not line.startswith("#") and "=" in line:
+            key, value = line.split("=", 1)
+            os.environ.setdefault(key.strip(), value.strip().strip('"').strip("'"))
 
 
 # ============================================================
