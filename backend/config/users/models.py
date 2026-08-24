@@ -121,6 +121,10 @@ class UserSettings(models.Model):
         related_name="settings"
     )
 
+    class Meta:
+        verbose_name = "User setting"
+        verbose_name_plural = "User settings"
+
     # Visitor settings
     require_id = models.BooleanField(
         default=True
